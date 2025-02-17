@@ -15,6 +15,7 @@ void ubahDataBuku();
 void lihatDataBuku();
 void pinjamBuku();
 void dataDiri();
+void loginInput(int pilihan);
 
 // Main function
 int main() {
@@ -26,6 +27,7 @@ void mainMenu() {
     int mainMenuChoice;
 
     do {
+        system("cls");
         cout << "=== Sistem Peminjaman Buku Perpustakaan ===" << endl;
         cout << "1. Login" << endl;
         cout << "2. Sign Up" << endl;
@@ -54,30 +56,40 @@ void login() {
     int loginChoice;
     string username, password;
 
+    system("cls");
+
     cout << "\n=== Pilih Jenis Login ===" << endl;
     cout << "1. Login sebagai Admin" << endl;
     cout << "2. Login sebagai Pengunjung" << endl;
+    cout << "3. Kembali\n";
     cout << "Pilihan: ";
     cin >> loginChoice;
 
-    cout << (loginChoice == 1 ? "\n=== Login Admin ===" : "\n=== Login Pengunjung ===") << endl;
-    cout << "Masukkan username: ";
-    cin >> username;
-    cout << "Masukkan password: ";
-    cin >> password;
-
-    if (loginChoice == 1) {
-        menuAdmin();
-    } else if (loginChoice == 2) {
-        menuPengunjung();
-    } else {
-        cout << "Pilihan login tidak valid.\n";
+    switch (loginChoice)
+    {
+    case 1:
+    loginInput(loginChoice);
+    break;
+    case 2:
+        loginInput(loginChoice);
+        break;
+    case 3:
+        mainMenu();
+    break;
+    default:
+        cout << "Pilihan tidak valid";
+        break;
     }
+    
 }
 
 // Sign Up function
 void signUp() {
     string username, password;
+
+    system("cls");
+
+
     cout << "\n=== Sign Up ===" << endl;
     cout << "Masukkan username baru: ";
     cin >> username;
@@ -91,6 +103,9 @@ void signUp() {
 void menuAdmin() {
     int userMenuChoice;
     do {
+
+        system("cls");
+
         cout << "\n=== Menu Admin ===" << endl;
         cout << "1. Tambah Data Buku" << endl;
         cout << "2. Hapus Data Buku" << endl;
@@ -122,6 +137,8 @@ void menuAdmin() {
 void menuPengunjung() {
     int userMenuChoice;
     do {
+        system("cls");
+
         cout << "\n=== Menu Pengunjung ===" << endl;
         cout << "1. Lihat Daftar Buku" << endl;
         cout << "2. Pinjam Buku" << endl;
@@ -151,29 +168,60 @@ void menuPengunjung() {
 
 // Tambah Data Buku
 void tambahDataBuku() {
+    system("cls");
+
     //Fitur Tambah Data Buku
 }
 
 // Hapus Data Buku
 void hapusDataBuku() {
+    system("cls");
+
     //Fitur Hapus Data Buku
 }
 
 // Ubah Data Buku
 void ubahDataBuku() {
+    system("cls");
+
     //Fitur Ubah Data Buku
 }
 
 // Lihat Data Buku
 void lihatDataBuku() {
+    system("cls");
+
     //Fitur Lihat Daftar Buku 
 }
 
 // Pinjam Buku
 void pinjamBuku() {
+    system("cls");
+
     //Fitur Pinjam Buku
 }
 
 void dataDiri(){
+    system("cls");
+
     //fitur data diri
 };
+
+void loginInput(int pilihan) {
+    string username, password;
+    (pilihan==1)? "login admin\n" : "login pengunjung\n";
+    cout << "Username: ";
+    cin >> username;
+    cout << "Password: ";
+    cin >> password;
+
+    switch (pilihan)
+    {
+    case 1:
+        menuAdmin();
+        break;
+    case 2:
+        menuPengunjung();
+        break;
+    }
+}
