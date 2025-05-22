@@ -63,7 +63,7 @@ void rak()
 // Main function
 int main()
 {
-    MasukkanDataKeFile("data_buku.txt");
+    SalinDatadariFilekeArray("data_buku.txt");
     mainMenu();
 }
 
@@ -666,8 +666,9 @@ void SalinDatadariFilekeArray(const string &namafile){
             getline(ss, data_buku[i].judul, ';');
             getline(ss, temp, ';');
             data_buku[i].tahunTerbit = stoi(temp);
-            
-
+            getline(ss, data_buku[i].pengarang, ';');
+            getline(ss, data_buku[i].penerbit, ';');
+            i++;
         }
     }
 }
