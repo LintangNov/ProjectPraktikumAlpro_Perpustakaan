@@ -1,0 +1,8 @@
+<<== START ==>>
+Username: Ananda
+Tanggal Lahir: 12/10/2007
+Alamat: Jalan Wonosari, Menteng, Jakarta Pusat
+No. Telepon: 08880828208
+Email: ananda@gmail.com
+Password: ananda
+<<== END ==>>
