@@ -517,6 +517,9 @@ void lihatDataBuku()
     cout << "\nUrutkan Berdasarkan: \n";
     cout << "1. Judul" << endl;
     cout << "2. Tahun Terbit" << endl;
+    cout << "3. ID Buku" << endl;
+    cout << "4. Kembali ke Menu Utama" << endl;
+    cout << "Pilih opsi: ";
     cin >> pilihan;
 
     switch (pilihan)
