@@ -2,6 +2,7 @@
 #include <string>
 #include <fstream>
 #include <sstream>
+#include <iomanip>
 
 using namespace std;
 
@@ -48,27 +49,23 @@ struct buku
     string penerbit;
 };
 
+struct pustakawan{
+    string username;
+    string password;
+} data_pustakawan[]={
+    {"fahmi", "123240055"},
+    {"lintang", "123240065"},
+};
+
 string username, password, tgl_lahir, alamat, no_telp, email;
 
 buku data_buku[201] = {
     {0},
 };
 
-void rak()
-{
-    buku rak[5][40];
-    int id = 1;
-    for (int i = 1; i <= 5; i++)
-    {
-        for (int j = 1; j <= 40; j++)
-        {
-            rak[i][j] = data_buku[id];
-            id++;
-        }
-    }
-}
-
-// Main function
+// ===========================
+// MAIN FUNCTION
+// ===========================
 int main()
 {
     SalinDatadariFilekeArray("data_buku.txt");
@@ -78,7 +75,7 @@ int main()
     do
     {
         system("cls");
-        cout << "=== Sistem Peminjaman Buku Perpustakaan ===" << endl;
+        cout << " === Sistem Peminjaman Buku Perpustakaan === " << endl<< endl;
         cout << "1. Masuk sebagai Pengunjung" << endl;
         cout << "2. Masuk sebagai Pustakawan" << endl;
         cout << "3. Keluar" << endl;
@@ -125,13 +122,125 @@ int main()
     } while (mainMenuChoice != 3);
 }
 
-
+// ===========================
+// Bagian Pustakawan
+// ===========================
 void loginPustakawan()
 {
-    // 1 untuk Pustakawan
+    system("cls");
+    string usn, pass;
+    cout << "Login Pustakawan" << endl << endl;
+    cout << "Username: ";
+    cin >> usn;
+    cout << "Password: ";
+    cin >> pass;
+    bool ketemu = false;
+    for (int i = 0; i < sizeof(data_pustakawan) / sizeof(data_pustakawan[0]); i++)
+    {
+        if (data_pustakawan[i].username == usn && data_pustakawan[i].password == pass)
+        {
+            cout << "Login berhasil!! \nSelamat datang " << data_pustakawan[i].username << endl;
+            ketemu = true;
+            system("pause");
+            menuPustakawan();
+        }
+    }
+    if (!ketemu)
+    {
+        cout << "Username atau password salah!\n";
+        system("pause");
+        loginPustakawan();
+    }
 }
 
-// Sign Up function
+void menuPustakawan()
+{
+    int userMenuChoice;
+    do
+    {
+
+        system("cls");
+
+        cout << "\n=== Menu Pustakawan ===" << endl;
+        cout << "1. Tambah Data Buku" << endl;
+        cout << "2. Hapus Data Buku" << endl;
+        cout << "3. Ubah Data Buku" << endl;
+        cout << "4. Logout" << endl;
+        cout << "Pilihan: ";
+        cin >> userMenuChoice;
+
+        switch (userMenuChoice)
+        {
+        case 1:
+            tambahDataBuku();
+            break;
+        case 2:
+            hapusDataBuku();
+            break;
+        case 3:
+            ubahDataBuku();
+            break;
+        case 4:
+            cout << "\nLogout dari akun Pustakawan.\n";
+            break;
+        default:
+            cout << "Pilihan tidak valid.\n";
+        }
+    } while (userMenuChoice != 4);
+}
+
+void menuPengunjung() {
+    // Fungsi menuPengunjung bisa diisi sesuai kebutuhan
+}
+
+// ===========================
+// Bagian Pengunjung
+// ===========================
+int signInPengunjung(){
+    system("cls");
+    string usn, pass;
+    cout << "==== Sign In Pengunjung ====" << endl<< endl;
+    cout << "Username: ";
+    cin >> usn;
+    cout << "Password: ";
+    cin >> pass;
+    ifstream filePengunjung("data_pengunjung.txt");
+    if (!filePengunjung.is_open())
+    {
+        cout << "Gagal membuka file data pengunjung!\n";
+        return 0;
+    }
+    string baris;
+    int counter=0;
+    while (getline(filePengunjung, baris)) {
+        if (baris == "<<== START ==>>") {
+            string usernameFile, passwordFile;
+            getline(filePengunjung, baris); // Username
+            usernameFile = baris.substr(baris.find(":") + 2);
+            getline(filePengunjung, baris); // Tanggal Lahir
+            getline(filePengunjung, baris); // Alamat
+            getline(filePengunjung, baris); // No. Telepon
+            getline(filePengunjung, baris); // Email
+            getline(filePengunjung, baris); // Password
+            passwordFile = baris.substr(baris.find(":") + 2);
+
+            if (usernameFile == usn && passwordFile == pass) {
+                cout << "Login berhasil!\n";
+                cout << "Selamat datang, " << usernameFile << "!\n";
+                filePengunjung.close();
+                system("pause");
+                return counter;
+            }
+        }
+    }
+
+    if (counter == 0){
+        cout << "Username atau password salah!\n";
+        system("pause");
+    }
+    return 0;
+}
+
 void signUpPengunjung()
 {
     // Cek username sudah ada atau belum
@@ -191,97 +300,27 @@ void signUpPengunjung()
     system("pause");
 }
 
-int signInPengunjung(){
-    system("cls");
-    string usn, pass;
-    cout << "==== Sign In Pengunjung ====" << endl<< endl;
-    cout << "Username: ";
-    cin >> usn;
-    cout << "Password: ";
-    cin >> pass;
-    ifstream filePengunjung("data_pengunjung.txt");
-    if (!filePengunjung.is_open())
-    {
-        cout << "Gagal membuka file data pengunjung!\n";
-        return 0;
-    }
-    string baris;
-    int counter=0;
-    while (getline(filePengunjung, baris)) {
-    if (baris == "<<== START ==>>") {
-        string usernameFile, passwordFile;
-        getline(filePengunjung, baris); // Username
-        usernameFile = baris.substr(baris.find(":") + 2);
-        getline(filePengunjung, baris); // Tanggal Lahir
-        getline(filePengunjung, baris); // Alamat
-        getline(filePengunjung, baris); // No. Telepon
-        getline(filePengunjung, baris); // Email
-        getline(filePengunjung, baris); // Password
-        passwordFile = baris.substr(baris.find(":") + 2);
-        
-        if (usernameFile == usn && passwordFile == pass) {
-            cout << "Login berhasil!\n";
-            cout << "Selamat datang, " << usernameFile << "!\n";
-            filePengunjung.close();
-            system("pause");
-            return counter;
-        }
-    }
-}
-
-    if (counter == 0){
-        cout << "Username atau password salah!\n";
-        system("pause");
-    }
-}
-
-// Menu Pustakawan
-void menuPustakawan()
-{
-    int userMenuChoice;
-    do
-    {
-
-        system("cls");
-
-        cout << "\n=== Menu Pustakawan ===" << endl;
-        cout << "1. Tambah Data Buku" << endl;
-        cout << "2. Hapus Data Buku" << endl;
-        cout << "3. Ubah Data Buku" << endl;
-        cout << "4. Logout" << endl;
-        cout << "Pilihan: ";
-        cin >> userMenuChoice;
-
-        switch (userMenuChoice)
-        {
-        case 1:
-            tambahDataBuku();
-            break;
-        case 2:
-            hapusDataBuku();
-            break;
-        case 3:
-            ubahDataBuku();
-            break;
-        case 4:
-            cout << "\nLogout dari akun Pustakawan.\n";
-            break;
-        default:
-            cout << "Pilihan tidak valid.\n";
-        }
-    } while (userMenuChoice != 4);
-}
-
-// Tambah Data Buku
+// ===========================
+// Bagian Buku Buku (Pustakawan)
+// ===========================
 void tambahDataBuku()
 {
     system("cls");
-
+    // Tampilkan daftar buku singkat
+    cout << "=== Daftar Buku Saat Ini ===" << endl;
+    cout << left << setw(4) << "ID" << setw(30) << "Judul" << setw(30) << "Pengarang" << endl;
+    for (int i = 1; i <= 200; i++) {
+        if (data_buku[i].idBuku != 0) {
+            cout << left << setw(4) << data_buku[i].idBuku
+                 << setw(30) << data_buku[i].judul
+                 << setw(30) << data_buku[i].pengarang << endl;
+        }
+    }
+    cout << endl;
     cout << "=== Tambah Data Buku ===" << endl;
-
     // Cari slot kosong
     int idx = -1;
-    for (int i = 1; i <= 50; i++)
+    for (int i = 1; i <= 200; i++)
     {
         if (data_buku[i].idBuku == 0)
         {
@@ -289,14 +328,12 @@ void tambahDataBuku()
             break;
         }
     }
-
     if (idx == -1)
     {
         cout << "Database buku sudah penuh!\n";
         system("pause");
         return;
     }
-
     data_buku[idx].idBuku = idx;
     cout << "ID Buku: " << idx << endl;
     cout << "Masukkan Judul Buku: ";
@@ -309,27 +346,44 @@ void tambahDataBuku()
     getline(cin, data_buku[idx].pengarang);
     cout << "Masukkan Penerbit: ";
     getline(cin, data_buku[idx].penerbit);
-
     cout << "\nData buku berhasil ditambahkan.\n";
     system("pause");
 }
 
-// Hapus Data Buku
 void hapusDataBuku()
 {
     system("cls");
-
+    // Tampilkan daftar buku singkat
+    cout << " ===== Daftar Buku Saat Ini ===== " << endl << endl;
+    cout << left << setw(4) << "ID" << setw(30) << "Judul" << setw(30) << "Pengarang" << endl;
+    for (int i = 1; i <= 200; i++) {
+        if (data_buku[i].idBuku != 0) {
+            cout << left << setw(4) << data_buku[i].idBuku
+                 << setw(30) << data_buku[i].judul
+                 << setw(30) << data_buku[i].pengarang << endl;
+        }
+    }
+    cout << endl;
     int id;
-    cout << "=== Hapus Data Buku ===" << endl;
+    cout << " ===== Hapus Data Buku =====" << endl << endl;
     cout << "Masukkan ID Buku yang ingin dihapus: ";
     cin >> id;
-
     // Cari buku berdasarkan ID
-    for (int i = 1; i <= 50; i++)
+    for (int i = 1; i <= 200; i++)
     {
         if (data_buku[i].idBuku == id)
         {
             data_buku[i] = {0}; // Menghapus data buku
+
+            for (int j = i; j < 200; j++) {
+                if (data_buku[j+1].idBuku == 0){
+                    data_buku[j] = {0}; 
+                    break;
+                }
+                data_buku[j+1].idBuku = j;
+                data_buku[j] = data_buku[j + 1]; // Geser data ke kiri
+            }
+
             cout << "Data buku berhasil dihapus.\n";
             system("pause");
             return;
@@ -339,20 +393,28 @@ void hapusDataBuku()
     system("pause");
 }
 
-// Ubah Data Buku
 void ubahDataBuku()
 {
     system("cls");
+    // Tampilkan daftar buku singkat
+    cout << "=== Daftar Buku Saat Ini ===" << endl << endl;
+    cout << left << setw(4) << "ID" << setw(30) << "Judul" << setw(30) << "Pengarang" << endl;
+    for (int i = 1; i <= 200; i++) {
+        if (data_buku[i].idBuku != 0) {
+            cout << left << setw(4) << data_buku[i].idBuku
+                 << setw(30) << data_buku[i].judul
+                 << setw(30) << data_buku[i].pengarang << endl;
+        }
+    }
+    cout << endl;
 
     int id, pilihan;
     bool ditemukan = false;
-
     cout << "=== Ubah Data Buku ===" << endl;
     cout << "Masukkan ID Buku yang ingin diubah: ";
     cin >> id;
-
     // Cari buku berdasarkan ID
-    for (int i = 1; i <= 50; i++)
+    for (int i = 1; i <= 200; i++)
     {
         if (data_buku[i].idBuku == id)
         {
@@ -402,7 +464,53 @@ void ubahDataBuku()
     }
 }
 
-// Lihat Data Buku
+// ===========================
+// Bagian Buku Buku (Pengunjung)
+// ===========================
+void CariBuku()
+{
+    system("cls");
+    int i;
+    int cariTahun;
+    string cari;
+    int basedOn;
+    cout << "\n==== Cari Buku Berdasarkan ====" << endl;
+    cout << "1. Judul" << endl;
+    cout << "2. Pengarang" << endl;
+    cout << "3. Penerbit" << endl;
+    cout << "4. Tahun Terbit" << endl;
+    cout << "Pilih berdasarkan: ";
+    cin >> basedOn;
+    switch (basedOn)
+    {
+    case 1:
+        cout << "Masukkan judul buku yang dicari: ";
+        cin.ignore();
+        getline(cin, cari);
+        sequentialPengarang(cari);
+        break;
+    case 2:
+        cout << "Masukkan nama pengarang buku yang dicari: ";
+        cin.ignore();
+        getline(cin, cari);
+        sequentialPengarang(cari);
+        break;
+    case 3:
+        cout << "Masukkan nama penerbit buku yang dicari: ";
+        cin.ignore();
+        getline(cin, cari);
+        sequentialPengarang(cari);
+        break;
+    case 4:
+        cout << "Masukkan tahun terbit yang dicari: ";
+        cin >> cariTahun;
+        sequentialTahun(cariTahun);
+        break;
+    default:
+        break;
+    }
+}
+
 void lihatDataBuku()
 {
     int pilihan;
@@ -424,7 +532,41 @@ void lihatDataBuku()
     }
 }
 
-// Urutkan berdasarkan tahun terbit
+void pinjamBuku()
+{
+    system("cls");
+
+    int idPinjam;
+    cout << "=== Pinjam Buku ===" << endl;
+    cout << "Masukkan ID Buku yang ingin dipinjam: ";
+    cin >> idPinjam;
+
+    // Cari buku berdasarkan ID
+    bool ditemukan = false;
+    for (int i = 1; i <= 50; i++)
+    {
+        if (data_buku[i].idBuku == idPinjam)
+        {
+            ditemukan = true;
+            cout << "\nBuku yang akan dipinjam:" << endl;
+            cout << "Judul      : " << data_buku[i].judul << endl;
+            cout << "Pengarang  : " << data_buku[i].pengarang << endl;
+            cout << "Penerbit   : " << data_buku[i].penerbit << endl;
+            cout << "Tahun Terbit: " << data_buku[i].tahunTerbit << endl;
+            cout << "\nBuku berhasil dipinjam!\n";
+            // Jika ingin menandai buku sudah dipinjam, bisa tambahkan status di struct buku
+            break;
+        }
+    }
+    if (!ditemukan)
+    {
+        cout << "Buku dengan ID tersebut tidak ditemukan.\n";
+    }
+    cout << "\nTekan enter untuk kembali...";
+    cin.ignore();
+    cin.get();
+}
+
 void lihatDataBukuTahunTerbit()
 {
     system("cls");
@@ -468,91 +610,9 @@ void lihatDataBukuJudul()
     }
 }
 
-// Cari Buku
-void CariBuku()
-{
-    system("cls");
-    int i;
-    int cariTahun;
-    string cari;
-    int basedOn;
-    cout << "\n==== Cari Buku Berdasarkan ====" << endl;
-    cout << "1. Judul" << endl;
-    cout << "2. Pengarang" << endl;
-    cout << "3. Penerbit" << endl;
-    cout << "4. Tahun Terbit" << endl;
-    cout << "Pilih berdasarkan: ";
-    cin >> basedOn;
-    switch (basedOn)
-    {
-    case 1:
-        cout << "Masukkan judul buku yang dicari: ";
-        cin.ignore();
-        getline(cin, cari);
-        sequentialPengarang(cari);
-        break;
-    case 2:
-        cout << "Masukkan nama pengarang buku yang dicari: ";
-        cin.ignore();
-        getline(cin, cari);
-        sequentialPengarang(cari);
-        break;
-    case 3:
-        cout << "Masukkan nama penerbit buku yang dicari: ";
-        cin.ignore();
-        getline(cin, cari);
-        sequentialPengarang(cari);
-        break;
-    case 4:
-
-        cout << "Masukkan tahun terbit yang dicari: ";
-        cin >> cariTahun;
-
-        sequentialTahun(cariTahun);
-
-        break;
-    default:
-        break;
-    }
-    // Fitur Lihat Daftar Buku
-}
-
-// Pinjam Buku
-void pinjamBuku()
-{
-    system("cls");
-
-    int idPinjam;
-    cout << "=== Pinjam Buku ===" << endl;
-    cout << "Masukkan ID Buku yang ingin dipinjam: ";
-    cin >> idPinjam;
-
-    // Cari buku berdasarkan ID
-    bool ditemukan = false;
-    for (int i = 1; i <= 50; i++)
-    {
-        if (data_buku[i].idBuku == idPinjam)
-        {
-            ditemukan = true;
-            cout << "\nBuku yang akan dipinjam:" << endl;
-            cout << "Judul      : " << data_buku[i].judul << endl;
-            cout << "Pengarang  : " << data_buku[i].pengarang << endl;
-            cout << "Penerbit   : " << data_buku[i].penerbit << endl;
-            cout << "Tahun Terbit: " << data_buku[i].tahunTerbit << endl;
-            cout << "\nBuku berhasil dipinjam!\n";
-            // Jika ingin menandai buku sudah dipinjam, bisa tambahkan status di struct buku
-            break;
-        }
-    }
-    if (!ditemukan)
-    {
-        cout << "Buku dengan ID tersebut tidak ditemukan.\n";
-    }
-    cout << "\nTekan enter untuk kembali...";
-    cin.ignore();
-    cin.get();
-}
-
+// ===========================
+// Bagian Data Diri Pengunjung
+// ===========================
 void lihatDataDiri()
 {
     system("cls");
@@ -566,8 +626,11 @@ void lihatDataDiri()
     cout << "\nTekan enter untuk kembali...";
     cin.ignore();
     cin.get();
-};
+}
 
+// ===========================
+// Function Umum
+// ===========================
 void sequentialTahun(int cariTahun)
 {
     system("cls");
@@ -619,60 +682,6 @@ void sequentialPengarang(string cariPengarang)
     }
 }
 
-// Input Data dari Array of Struct ke File
-void MasukkanDataKeFile(const string &namafile)
-{
-    ofstream file(namafile, ios::app);
-    if (!file.is_open())
-    {
-        cout << "Gagal membuka file!!" << endl;
-        return;
-    }
-    else
-    {
-        for (int i = 1; i <= 200; i++)
-        {
-            if (data_buku[i].idBuku != 0)
-            {
-                file << data_buku[i].idBuku << ";" << data_buku[i].judul << ";" << data_buku[i].tahunTerbit
-                     << ";" << data_buku[i].pengarang << ";" << data_buku[i].penerbit << ";" << endl;
-            }
-        }
-    }
-}
-
-// Ambil Data dari File ke Array of Struct
-
-void SalinDatadariFilekeArray(const string &namafile)
-{
-
-    ifstream file(namafile, ios::in);
-    if (!file.is_open())
-    {
-        cout << "Gagal membuka file!!" << endl;
-        return;
-    }
-    else
-    {
-        string baris;
-        int i = 1;
-        while (getline(file, baris) && i <= 200)
-        {
-            stringstream ss(baris);
-            string temp;
-            getline(ss, temp, ';');
-            data_buku[i].idBuku = stoi(temp);
-            getline(ss, data_buku[i].judul, ';');
-            getline(ss, temp, ';');
-            data_buku[i].tahunTerbit = stoi(temp);
-            getline(ss, data_buku[i].pengarang, ';');
-            getline(ss, data_buku[i].penerbit, ';');
-            i++;
-        }
-    }
-}
-
-// Sorting int
 void ShellSort(int n)
 {
     int gap = n / 2;
@@ -702,6 +711,55 @@ void BubbleSortString(int n)
             {
                 swap(data_buku[j], data_buku[j + 1]);
             }
+        }
+    }
+}
+
+void MasukkanDataKeFile(const string &namafile)
+{
+    ofstream file(namafile, ios::app);
+    if (!file.is_open())
+    {
+        cout << "Gagal membuka file!!" << endl;
+        return;
+    }
+    else
+    {
+        for (int i = 1; i <= 200; i++)
+        {
+            if (data_buku[i].idBuku != 0)
+            {
+                file << data_buku[i].idBuku << ";" << data_buku[i].judul << ";" << data_buku[i].tahunTerbit
+                     << ";" << data_buku[i].pengarang << ";" << data_buku[i].penerbit << ";" << endl;
+            }
+        }
+    }
+}
+
+void SalinDatadariFilekeArray(const string &namafile)
+{
+    ifstream file(namafile, ios::in);
+    if (!file.is_open())
+    {
+        cout << "Gagal membuka file!!" << endl;
+        return;
+    }
+    else
+    {
+        string baris;
+        int i = 1;
+        while (getline(file, baris) && i <= 200)
+        {
+            stringstream ss(baris);
+            string temp;
+            getline(ss, temp, ';');
+            data_buku[i].idBuku = stoi(temp);
+            getline(ss, data_buku[i].judul, ';');
+            getline(ss, temp, ';');
+            data_buku[i].tahunTerbit = stoi(temp);
+            getline(ss, data_buku[i].pengarang, ';');
+            getline(ss, data_buku[i].penerbit, ';');
+            i++;
         }
     }
 }
