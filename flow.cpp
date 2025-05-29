@@ -552,6 +552,8 @@ void CariBuku(){
     default:
         break;
     }
+
+
 }
 
 void lihatDataBuku()
@@ -634,7 +636,7 @@ void lihatDataBukuTahunTerbit()
             cout << "Tahun Terbit: " << data_buku[i].tahunTerbit << endl;
             cout << "Pengarang: " << data_buku[i].pengarang << endl;
             cout << "Penerbit: " << data_buku[i].penerbit << endl;
-            cout << endl;
+            cout << "--------------------------------------------------"<< endl;
         }
     }
     cout << "\nTekan enter untuk kembali...";
@@ -656,7 +658,7 @@ void lihatDataBukuJudul()
             cout << "Tahun Terbit: " << data_buku[i].tahunTerbit << endl;
             cout << "Pengarang: " << data_buku[i].pengarang << endl;
             cout << "Penerbit: " << data_buku[i].penerbit << endl;
-            cout << endl;
+            cout << "--------------------------------------------------"<< endl;
         }
     }
     cout << "\nTekan enter untuk kembali...";
@@ -676,7 +678,7 @@ void lihatDataBukuId(){
             cout << "Tahun Terbit: " << data_buku[i].tahunTerbit << endl;
             cout << "Pengarang: " << data_buku[i].pengarang << endl;
             cout << "Penerbit: " << data_buku[i].penerbit << endl;
-            cout << endl;
+            cout << "--------------------------------------------------" << endl;
         }
     }
     cout << "\nTekan enter untuk kembali...";
@@ -772,6 +774,7 @@ void sequentialPengarang(string cariPengarang)
             cout << "Penerbit: " << data_buku[i].penerbit << endl
                  << endl;
             ketemu = true;
+            
         }
         i++;
     }
@@ -779,6 +782,7 @@ void sequentialPengarang(string cariPengarang)
     {
         cout << "Buku tidak ditemukan." << endl;
     }
+    system("pause");
 }
 
 void ShellSort(int total_buku)
