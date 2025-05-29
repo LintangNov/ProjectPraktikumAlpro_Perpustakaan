@@ -6,3 +6,11 @@ No. Telepon: 08880828208
 Email: ananda@gmail.com
 Password: ananda
 <<== END ==>>
+<<== START ==>>
+Username: Wahyu
+Tanggal Lahir: 12/10/2008
+Alamat: Jalan Wahyu no.12, Jatiluhur, Semeru, Jawa Selatan
+No. Telepon: 023751543
+Email: wahyu@gamil.com
+Password: wahyuskuy
+<<== END ==>>

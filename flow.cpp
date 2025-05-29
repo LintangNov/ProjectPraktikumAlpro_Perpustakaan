@@ -134,33 +134,32 @@ void loginPustakawan()
 // Sign Up function
 void signUpPengunjung()
 {
-    fstream filePengunjung("data_pengunjung.txt", ios::app);
-    if (!filePengunjung.is_open())
-    {
-        cout << "Gagal membuka file untuk menyimpan data!\n";
+    // Cek username sudah ada atau belum
+    ifstream fileCek("data_pengunjung.txt");
+    if (!fileCek.is_open()) {
+        cout << "Gagal membuka file untuk membaca data!\n";
         return;
     }
-
     system("cls");
     cout << "=== Sign Up ===" << endl << endl;
     cout << "Masukkan username baru: ";
     cin >> username;
     string baris;
-    while (getline(filePengunjung, baris))
-    {   
-        if (baris == "<<== START ==>>"){
+    while (getline(fileCek, baris)) {
+        if (baris == "<<== START ==>>") {
             string usernameFile;
-
-            getline(filePengunjung, baris); 
+            getline(fileCek, baris); // Username
             usernameFile = baris.substr(10);
-            if(username == usernameFile){
+            if (username == usernameFile) {
                 cout << "Username sudah ada! Silahkan coba username lain.\n";
-                filePengunjung.close();
+                fileCek.close();
                 system("pause");
                 signUpPengunjung();
+                return;
             }
         }
     }
+    fileCek.close();
 
     cout << "Masukkan tanggal lahir (DD/MM/YYYY): ";
     cin >> tgl_lahir;
@@ -174,17 +173,19 @@ void signUpPengunjung()
     cout << "Masukkan password baru: ";
     cin >> password;
 
-    
-    
-    
-    filePengunjung << "<<== START ==>>\n";
+    ofstream filePengunjung("data_pengunjung.txt", ios::app);
+    if (!filePengunjung.is_open()) {
+        cout << "Gagal membuka file untuk menyimpan data!\n";
+        return;
+    }
+    filePengunjung << "<<== START ==>>" << endl;
     filePengunjung << "Username: " << username << endl;
     filePengunjung << "Tanggal Lahir: " << tgl_lahir << endl;
     filePengunjung << "Alamat: " << alamat << endl;
     filePengunjung << "No. Telepon: " << no_telp << endl;
     filePengunjung << "Email: " << email << endl;
     filePengunjung << "Password: " << password << endl;
-    filePengunjung << "<<== END ==>>\n";
+    filePengunjung << "<<== END ==>>" << endl;
     filePengunjung.close();
     cout << "\nAkun berhasil dibuat! Silakan login.\n";
     system("pause");
@@ -207,24 +208,27 @@ int signInPengunjung(){
     string baris;
     int counter=0;
     while (getline(filePengunjung, baris)) {
-        if (baris=="<<== START ==>>"){
-            counter++;
-            stringstream ss(baris);
-            string usernameFile, passwordFile;
-            getline(filePengunjung, baris);
-            getline(filePengunjung, baris);
-            usernameFile = baris.substr(baris.find(":")+2);
-            getline(filePengunjung, baris);
-            getline(filePengunjung, baris);
-            passwordFile = baris.substr(baris.find(":")+2);
-            if (usernameFile == usn && passwordFile == pass) {
-                cout << "Login berhasil!!!\n";
-                cout << "Selamat datang, " << usernameFile << "!\n";
-                system("pause");
-                return counter;
-            }
+    if (baris == "<<== START ==>>") {
+        string usernameFile, passwordFile;
+        getline(filePengunjung, baris); // Username
+        usernameFile = baris.substr(baris.find(":") + 2);
+        getline(filePengunjung, baris); // Tanggal Lahir
+        getline(filePengunjung, baris); // Alamat
+        getline(filePengunjung, baris); // No. Telepon
+        getline(filePengunjung, baris); // Email
+        getline(filePengunjung, baris); // Password
+        passwordFile = baris.substr(baris.find(":") + 2);
+        
+        if (usernameFile == usn && passwordFile == pass) {
+            cout << "Login berhasil!\n";
+            cout << "Selamat datang, " << usernameFile << "!\n";
+            filePengunjung.close();
+            system("pause");
+            return counter;
         }
     }
+}
+
     if (counter == 0){
         cout << "Username atau password salah!\n";
         system("pause");
