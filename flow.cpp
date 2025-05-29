@@ -181,6 +181,7 @@ void menuPustakawan()
             ubahDataBuku();
             break;
         case 4:
+            MasukkanDataKeFile("data_buku.txt");
             cout << "\nLogout dari akun Pustakawan.\n";
             break;
         default:
@@ -366,15 +367,19 @@ void hapusDataBuku()
     cout << endl;
     int id;
     cout << " ===== Hapus Data Buku =====" << endl << endl;
-    cout << "Masukkan ID Buku yang ingin dihapus: ";
+    cout << "Masukkan ID Buku yang ingin dihapus (0 untuk batal): ";
     cin >> id;
+    if (id == 0) {
+        cout << "Penghapusan dibatalkan.\n";
+        system("pause");
+        return;
+    }
     // Cari buku berdasarkan ID
     for (int i = 1; i <= 200; i++)
     {
         if (data_buku[i].idBuku == id)
         {
             data_buku[i] = {0}; // Menghapus data buku
-
             for (int j = i; j < 200; j++) {
                 if (data_buku[j+1].idBuku == 0){
                     data_buku[j] = {0}; 
@@ -383,7 +388,6 @@ void hapusDataBuku()
                 data_buku[j+1].idBuku = j;
                 data_buku[j] = data_buku[j + 1]; // Geser data ke kiri
             }
-
             cout << "Data buku berhasil dihapus.\n";
             system("pause");
             return;
