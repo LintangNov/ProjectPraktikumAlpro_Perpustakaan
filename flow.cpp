@@ -28,17 +28,10 @@ void lihatDataBuku();
 void pinjamBuku();
 void lihatDataBukuTahunTerbit();
 void lihatDataBukuJudul();
+void lihatDataBukuId();
 
 // Bagian Data Diri Pengunjung
 void lihatDataDiri();
-
-// Function Umum
-void sequentialTahun(int cariTahun);
-void sequentialPengarang(string cariPengarang);
-void ShellSort(int n);
-void BubbleSortString(int n);
-void MasukkanDataKeFile(const string &namafile);
-void SalinDatadariFilekeArray(const string &namafile);
 
 struct buku
 {
@@ -48,6 +41,17 @@ struct buku
     string pengarang;
     string penerbit;
 };
+
+
+// Function Umum
+void sequentialTahun(int cariTahun);
+void sequentialPengarang(string cariPengarang);
+void ShellSort(int n);
+void BubbleSortString(int n);
+void quicksort(buku data_buku[], int low, int high);
+void MasukkanDataKeFile(const string &namafile);
+void SalinDatadariFilekeArray(const string &namafile);
+
 
 struct pustakawan{
     string username;
@@ -191,9 +195,42 @@ void menuPustakawan()
 }
 
 void menuPengunjung() {
-    // Fungsi menuPengunjung bisa diisi sesuai kebutuhan
-}
+    int choice;
+    do{
+    system("cls");
+    cout << "\n=== Menu Pengunjung ===" << endl;
+    cout << "1. Cari Buku" << endl;
+    cout << "2. Lihat Data Buku" << endl;
+    cout << "3. Pinjam Buku" << endl;
+    cout << "4. Lihat Data Diri" << endl;
+    cout << "5. Logout" << endl;
+    cout << "Pilihan: ";
+    
+    cin >> choice;  
 
+    switch (choice){
+        case 1:
+            CariBuku();
+            break;
+        case 2:
+            lihatDataBuku();
+            break;
+        case 3:
+            pinjamBuku();
+            break;
+        case 4:
+            lihatDataDiri();
+            break;
+        case 5:
+            cout << "Logout dari akun Pengunjung.\n";
+            return; // Kembali ke menu utama
+        default:
+            cout << "Pilihan tidak valid.\n";
+            system("pause");
+            menuPengunjung(); // Tampilkan menu lagi jika pilihan tidak valid
+            }
+    } while (choice != 5);
+}
 // ===========================
 // Bagian Pengunjung
 // ===========================
@@ -212,7 +249,7 @@ int signInPengunjung(){
         return 0;
     }
     string baris;
-    int counter=0;
+    bool counter = false;
     while (getline(filePengunjung, baris)) {
         if (baris == "<<== START ==>>") {
             string usernameFile, passwordFile;
@@ -230,16 +267,17 @@ int signInPengunjung(){
                 cout << "Selamat datang, " << usernameFile << "!\n";
                 filePengunjung.close();
                 system("pause");
-                return counter;
+                counter = true;
             }
         }
     }
 
-    if (counter == 0){
+    if (counter = false) {
         cout << "Username atau password salah!\n";
         system("pause");
-    }
-    return 0;
+    } else
+    menuPengunjung();
+    filePengunjung.close();
 }
 
 void signUpPengunjung()
@@ -525,7 +563,9 @@ void lihatDataBuku()
     cout << "4. Kembali ke Menu Utama" << endl;
     cout << "Pilih opsi: ";
     cin >> pilihan;
-
+    system("cls");
+    cin.ignore(); // Bersihkan buffer
+    cout << "=== Daftar Buku ===" << endl;
     switch (pilihan)
     {
     case 1:
@@ -534,6 +574,12 @@ void lihatDataBuku()
     case 2:
         lihatDataBukuTahunTerbit();
         break;
+    case 3:
+        lihatDataBukuId();
+        break;
+    case 4:
+        cout << "Kembali ke menu utama.\n";
+        return;
     default:
         break;
     }
@@ -576,7 +622,6 @@ void pinjamBuku()
 
 void lihatDataBukuTahunTerbit()
 {
-    system("cls");
     cout << "\n=== Daftar Buku Berdasarkan Tahun Terbit ===" << endl;
     int n = sizeof(data_buku) / sizeof(data_buku[0]);
     ShellSort(n);
@@ -599,7 +644,7 @@ void lihatDataBukuTahunTerbit()
 
 void lihatDataBukuJudul()
 {
-    system("cls");
+   
     cout << "====== Daftar Buku Berdasarkan Judul ======" << endl;
     int n = sizeof(data_buku) / sizeof(data_buku[0]);
     BubbleSortString(n);
@@ -615,6 +660,30 @@ void lihatDataBukuJudul()
             cout << endl;
         }
     }
+    cout << "\nTekan enter untuk kembali...";
+    cin.ignore();
+    cin.get();
+}
+void lihatDataBukuId(){
+
+    cout << "====== Daftar Buku Berdasarkan ID ======" << endl;
+    int n = sizeof(data_buku) / sizeof(data_buku[0]);
+    quicksort(data_buku, 1, n - 1);
+    for (int i = 1; i <= n; i++)
+    {
+        if (data_buku[i].idBuku != 0)
+        {
+            cout << "ID Buku: " << data_buku[i].idBuku << endl;
+            cout << "Judul: " << data_buku[i].judul << endl;
+            cout << "Tahun Terbit: " << data_buku[i].tahunTerbit << endl;
+            cout << "Pengarang: " << data_buku[i].pengarang << endl;
+            cout << "Penerbit: " << data_buku[i].penerbit << endl;
+            cout << endl;
+        }
+    }
+    cout << "\nTekan enter untuk kembali...";
+    cin.ignore();
+    cin.get();
 }
 
 // ===========================
@@ -722,9 +791,31 @@ void BubbleSortString(int n)
     }
 }
 
+void quicksort(buku* data_buku, int low, int high)
+{
+    if (low < high)
+    {
+        int pivot = data_buku[high].idBuku;
+        int i = (low - 1);
+        for (int j = low; j < high; j++)
+        {
+            if (data_buku[j].idBuku < pivot)
+            {
+                i++;
+                swap(data_buku[i], data_buku[j]);
+            }
+        }
+        swap(data_buku[i + 1], data_buku[high]);
+        int pi = i + 1;
+
+        quicksort(data_buku, low, pi - 1);
+        quicksort(data_buku, pi + 1, high);
+    }
+}
+
 void MasukkanDataKeFile(const string &namafile)
 {
-    ofstream file(namafile, ios::app);
+    ofstream file(namafile, ios::trunc);
     if (!file.is_open())
     {
         cout << "Gagal membuka file!!" << endl;
