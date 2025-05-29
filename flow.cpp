@@ -31,7 +31,7 @@ void lihatDataBukuJudul();
 void lihatDataBukuId();
 
 // Bagian Data Diri Pengunjung
-void lihatDataDiri();
+void DataDiri();
 
 struct buku
 {
@@ -53,6 +53,7 @@ void MasukkanDataKeFile(const string &namafile);
 void SalinDatadariFilekeArray(const string &namafile);
 
 
+
 struct pustakawan{
     string username;
     string password;
@@ -61,11 +62,12 @@ struct pustakawan{
     {"lintang", "123240065"},
 };
 
-string username, password, tgl_lahir, alamat, no_telp, email;
+string username, usn, password, tgl_lahir, alamat, no_telp, email, nama_file = "data_pengunjung.txt";
 
 buku data_buku[201] = {
     {0},
 };
+int total_buku = sizeof(data_buku) / sizeof(data_buku[0]);
 
 // ===========================
 // MAIN FUNCTION
@@ -219,7 +221,8 @@ void menuPengunjung() {
             pinjamBuku();
             break;
         case 4:
-            lihatDataDiri();
+            DataDiri();
+            system("pause");
             break;
         case 5:
             cout << "Logout dari akun Pengunjung.\n";
@@ -236,13 +239,13 @@ void menuPengunjung() {
 // ===========================
 int signInPengunjung(){
     system("cls");
-    string usn, pass;
+    string pass;
     cout << "==== Sign In Pengunjung ====" << endl<< endl;
     cout << "Username: ";
     cin >> usn;
     cout << "Password: ";
     cin >> pass;
-    ifstream filePengunjung("data_pengunjung.txt");
+    ifstream filePengunjung(nama_file);
     if (!filePengunjung.is_open())
     {
         cout << "Gagal membuka file data pengunjung!\n";
@@ -283,7 +286,7 @@ int signInPengunjung(){
 void signUpPengunjung()
 {
     // Cek username sudah ada atau belum
-    ifstream fileCek("data_pengunjung.txt");
+    ifstream fileCek(nama_file);
     if (!fileCek.is_open()) {
         cout << "Gagal membuka file untuk membaca data!\n";
         return;
@@ -321,7 +324,7 @@ void signUpPengunjung()
     cout << "Masukkan password baru: ";
     cin >> password;
 
-    ofstream filePengunjung("data_pengunjung.txt", ios::app);
+    ofstream filePengunjung(nama_file, ios::app);
     if (!filePengunjung.is_open()) {
         cout << "Gagal membuka file untuk menyimpan data!\n";
         return;
@@ -395,7 +398,7 @@ void hapusDataBuku()
     // Tampilkan daftar buku singkat
     cout << " ===== Daftar Buku Saat Ini ===== " << endl << endl;
     cout << left << setw(4) << "ID" << setw(30) << "Judul" << setw(30) << "Pengarang" << endl;
-    for (int i = 1; i <= 200; i++) {
+    for (int i = 1; i <= total_buku; i++) {
         if (data_buku[i].idBuku != 0) {
             cout << left << setw(4) << data_buku[i].idBuku
                  << setw(30) << data_buku[i].judul
@@ -435,13 +438,12 @@ void hapusDataBuku()
     system("pause");
 }
 
-void ubahDataBuku()
-{
+void ubahDataBuku(){
     system("cls");
     // Tampilkan daftar buku singkat
     cout << "=== Daftar Buku Saat Ini ===" << endl << endl;
     cout << left << setw(4) << "ID" << setw(30) << "Judul" << setw(30) << "Pengarang" << endl;
-    for (int i = 1; i <= 200; i++) {
+    for (int i = 1; i <= total_buku; i++) {
         if (data_buku[i].idBuku != 0) {
             cout << left << setw(4) << data_buku[i].idBuku
                  << setw(30) << data_buku[i].judul
@@ -509,8 +511,7 @@ void ubahDataBuku()
 // ===========================
 // Bagian Buku Buku (Pengunjung)
 // ===========================
-void CariBuku()
-{
+void CariBuku(){
     system("cls");
     int i;
     int cariTahun;
@@ -596,7 +597,7 @@ void pinjamBuku()
 
     // Cari buku berdasarkan ID
     bool ditemukan = false;
-    for (int i = 1; i <= 50; i++)
+    for (int i = 1; i <= total_buku; i++)
     {
         if (data_buku[i].idBuku == idPinjam)
         {
@@ -623,9 +624,8 @@ void pinjamBuku()
 void lihatDataBukuTahunTerbit()
 {
     cout << "\n=== Daftar Buku Berdasarkan Tahun Terbit ===" << endl;
-    int n = sizeof(data_buku) / sizeof(data_buku[0]);
-    ShellSort(n);
-    for (int i = 1; i <= n; i++)
+    ShellSort(total_buku);
+    for (int i = 1; i <= total_buku; i++)
     {
         if (data_buku[i].idBuku != 0)
         {
@@ -646,9 +646,8 @@ void lihatDataBukuJudul()
 {
    
     cout << "====== Daftar Buku Berdasarkan Judul ======" << endl;
-    int n = sizeof(data_buku) / sizeof(data_buku[0]);
-    BubbleSortString(n);
-    for (int i = 1; i <= n; i++)
+    BubbleSortString(total_buku);
+    for (int i = 1; i <= total_buku; i++)
     {
         if (data_buku[i].idBuku != 0)
         {
@@ -667,9 +666,8 @@ void lihatDataBukuJudul()
 void lihatDataBukuId(){
 
     cout << "====== Daftar Buku Berdasarkan ID ======" << endl;
-    int n = sizeof(data_buku) / sizeof(data_buku[0]);
-    quicksort(data_buku, 1, n - 1);
-    for (int i = 1; i <= n; i++)
+    quicksort(data_buku, 1, total_buku - 1);
+    for (int i = 1; i <= total_buku ; i++)
     {
         if (data_buku[i].idBuku != 0)
         {
@@ -689,19 +687,44 @@ void lihatDataBukuId(){
 // ===========================
 // Bagian Data Diri Pengunjung
 // ===========================
-void lihatDataDiri()
-{
-    system("cls");
-
-    cout << "\n--- Data Diri Anda ---" << endl;
-    cout << "Username     : " << username << endl;
-    cout << "Tanggal Lahir: " << tgl_lahir << endl;
-    cout << "Alamat       : " << alamat << endl;
-    cout << "No. Telepon  : " << no_telp << endl;
-    cout << "Email        : " << email << endl;
-    cout << "\nTekan enter untuk kembali...";
-    cin.ignore();
-    cin.get();
+void DataDiri(){
+    ifstream filePengunjung(nama_file);
+    if (!filePengunjung.is_open())
+    {
+        cout << "Gagal membuka file data pengunjung!\n";
+        return;
+    }
+    string baris;
+   
+    cout << "\n=== Data Diri Pengunjung ===" << endl;
+    while (getline(filePengunjung, baris)) {
+        if (baris == "<<== START ==>>") {
+            string usernameFile, tglLahirFile, alamatFile, noTelpFile, emailFile;
+            getline(filePengunjung, baris); // Username
+            usernameFile = baris.substr(baris.find(":") + 2);
+            getline(filePengunjung, baris); // Tanggal Lahir
+            tglLahirFile = baris.substr(baris.find(":") + 2);
+            getline(filePengunjung, baris); // Alamat
+            alamatFile = baris.substr(baris.find(":") + 2);
+            getline(filePengunjung, baris); // No. Telepon
+            noTelpFile = baris.substr(baris.find(":") + 2);
+            getline(filePengunjung, baris); // Email
+            emailFile = baris.substr(baris.find(":") + 2);
+            getline(filePengunjung, baris); // Password (tidak ditampilkan)
+            
+            if (usn == usernameFile) {
+            cout << "Username     : " << usernameFile << endl;
+            cout << "Tanggal Lahir: " << tglLahirFile << endl;
+            cout << "Alamat       : " << alamatFile << endl;
+            cout << "No. Telepon  : " << noTelpFile << endl;
+            cout << "Email        : " << emailFile << endl;
+            cout << "\nTekan enter untuk kembali...\n";
+            cin.ignore();
+        }
+    }
+} 
+    filePengunjung.close();
+    cin.get(); // Tunggu input dari pengguna sebelum kembali ke menu
 }
 
 // ===========================
@@ -758,12 +781,12 @@ void sequentialPengarang(string cariPengarang)
     }
 }
 
-void ShellSort(int n)
+void ShellSort(int total_buku)
 {
-    int gap = n / 2;
+    int gap = total_buku / 2;
     while (gap > 0)
     {
-        for (int i = gap; i < n; i++)
+        for (int i = gap; i < total_buku; i++)
         {
             buku temp = data_buku[i];
             int j;
@@ -777,11 +800,11 @@ void ShellSort(int n)
     }
 }
 
-void BubbleSortString(int n)
+void BubbleSortString(int total_buku)
 {
-    for (int i = 0; i < n - 1; i++)
+    for (int i = 0; i < total_buku - 1; i++)
     {
-        for (int j = 0; j < n - i - 1; j++)
+        for (int j = 0; j < total_buku - i - 1; j++)
         {
             if (data_buku[j].judul > data_buku[j + 1].judul)
             {
