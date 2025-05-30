@@ -1,24 +1,43 @@
 <<== START ==>>
-Username: Ananda
-Tanggal Lahir: 12/10/2007
-Alamat: Jalan Wonosari, Menteng, Jakarta Pusat
-No. Telepon: 08880828208
-Email: ananda@gmail.com
-Password: ananda
+Username            : Ananda
+Tanggal Lahir       : 12/10/2007
+Alamat              : Jalan Wonosari, Menteng, Jakarta Pusat
+No. Telepon         : 08880828208
+Email               : ananda@gmail.com
+Password            : ananda
 <<== END ==>>
 <<== START ==>>
-Username: Wahyu
-Tanggal Lahir: 12/10/2008
-Alamat: Jalan Wahyu no.12, Jatiluhur, Semeru, Jawa Selatan
-No. Telepon: 023751543
-Email: wahyu@gamil.com
-Password: wahyuskuy
+Username            : Wahyu
+Tanggal Lahir       : 12/10/2008
+Alamat              : Jalan Wahyu no.12, Jatiluhur, Semeru, Jawa Selatan
+No. Telepon         : 023751543
+Email               : wahyu@gamil.com
+Password            : wahyuskuy
 <<== END ==>>
 <<== START ==>>
-Username: Bagyo
-Tanggal Lahir: 20/9/1004
-Alamat: Nabe, Sindok, Kaluang Soba, NTT
-No. Telepon: 082499876567
-Email: subagyo@gmail.com
-Password: subagyo
+Username            : Bagyo
+Tanggal Lahir       : 20/9/1004
+Alamat              : Nabe, Sindok, Kaluang Soba, NTT
+No. Telepon         : 082499876567
+Email               : subagyo@gmail.com
+Password            : subagyo
+<<== END ==>>
+<<== START ==>>
+Username	        : AmbaTukam
+Tanggal Lahir	    : 18/3/1999
+Alamat	            : Ngawi
+No. Telepon	        : 0812345678
+Email	            : @mas_amba
+Password	        : amba
+Buku Dipinjam	    : 
+<<== END ==>>
+Buku Dipinjam: 
+<<== START ==>>
+Username            : Bahlul
+Tanggal Lahir       : 12/3
+Alamat              : Jalan Bahlil Lahab
+No. Telepon         : 082322332323
+Email               : bahlillaha@gmail.com
+Password            : bahaha
+Buku Dipinjam       : 
 <<== END ==>>

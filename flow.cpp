@@ -29,6 +29,7 @@ void pinjamBuku();
 void lihatDataBukuTahunTerbit();
 void lihatDataBukuJudul();
 void lihatDataBukuID();
+void lihatDataPeminjaman();
 
 // Bagian Data Diri Pengunjung
 void lihatDataDiri();
@@ -42,6 +43,7 @@ void QuickSort(int low, int high);
 void MasukkanDataKeFile(const string &namafile);
 void SalinDatadariFilekeArray(const string &namafile);
 void center(string text, string batasSamping, int tabelLength);
+void simpanPeminjamanKeFile(const string &namafile, const string &judulBuku);
 
 struct buku
 {
@@ -60,7 +62,7 @@ struct pustakawan{
     {"lintang", "123240065"},
 };
 
-string username, password, tgl_lahir, alamat, no_telp, email;
+string username, username_pinjam, password, tgl_lahir, alamat, no_telp, email, bukuDipinjam;
 
 buku data_buku[201] = {
     {0},
@@ -172,18 +174,18 @@ void loginPustakawan()
 }
 
 void menuPustakawan()
-{
+{   system("cls");
     int userMenuChoice;
     do
     {
-        system("cls");
         cout << string(40, '-') << endl;
         center("Menu Pustakawan", "|", 40);
         cout << string(40, '-') << endl;
         cout << "1. Tambah Data Buku" << endl;
         cout << "2. Hapus Data Buku" << endl;
         cout << "3. Ubah Data Buku" << endl;
-        cout << "4. Logout" << endl;
+        cout << "4. Lihat Data Peminjaman" << endl;
+        cout << "5. Logout" << endl;
         cout << "Pilihan: ";
         cin >> userMenuChoice;
 
@@ -199,13 +201,16 @@ void menuPustakawan()
             ubahDataBuku();
             break;
         case 4:
+            lihatDataPeminjaman();
+            break;
+        case 5:
             MasukkanDataKeFile("data_buku.txt");
             cout << "\nLogout dari akun Pustakawan.\n";
             break;
         default:
             cout << "Pilihan tidak valid.\n";
         }
-    } while (userMenuChoice != 4);
+    } while (userMenuChoice != 5);
 }
 
 void menuPengunjung() {
@@ -357,12 +362,13 @@ void signUpPengunjung()
         return;
     }
     filePengunjung << "<<== START ==>>" << endl;
-    filePengunjung << "Username: " << username << endl;
-    filePengunjung << "Tanggal Lahir: " << tgl_lahir << endl;
-    filePengunjung << "Alamat: " << alamat << endl;
-    filePengunjung << "No. Telepon: " << no_telp << endl;
-    filePengunjung << "Email: " << email << endl;
-    filePengunjung << "Password: " << password << endl;
+    filePengunjung << left << setw(20)<<"Username" << ": " << username << endl;
+    filePengunjung << left << setw(20)<<"Tanggal Lahir" << ": " << tgl_lahir << endl;
+    filePengunjung << left << setw(20)<<"Alamat" << ": " << alamat << endl;
+    filePengunjung << left << setw(20)<<"No. Telepon" << ": " << no_telp << endl;
+    filePengunjung << left << setw(20)<<"Email" << ": " << email << endl;
+    filePengunjung << left << setw(20)<<"Password" << ": " << password << endl;
+    filePengunjung << left << setw(20)<<"Buku Dipinjam" << ": " << bukuDipinjam << endl; 
     filePengunjung << "<<== END ==>>" << endl;
     filePengunjung.close();
     cout << "\nAkun berhasil dibuat! Silakan login.\n";
@@ -647,6 +653,39 @@ void lihatDataBuku()
     }
 }
 
+void lihatDataPeminjaman(){
+  
+    ofstream file("peminjaman.txt", ios:: app);
+    if (!file.is_open())
+    {
+        cout << "Gagal membuka file peminjaman!\n";
+        return;
+    }
+    string baris;
+    bool exists = false;
+    ifstream filePeminjaman("peminjaman.txt");
+    cout << "Data Peminjaman:\n";
+    while (getline(filePeminjaman, baris))
+    {
+        if (baris == "<<== START ==>>")
+        {
+            exists = true;
+            cout << "=====================\n";
+            while (getline(filePeminjaman, baris) && baris != "<<== END ==>>")
+            {
+                cout << baris << endl;
+            }
+        }
+    } if (!exists)
+    {
+        cout << "Tidak ada data peminjaman yang ditemukan.\n";
+    }
+    cout << "=====================\n";
+    cout << "Tekan untuk lanjut...";
+    cin.ignore();
+    cin.get();
+}
+
 void pinjamBuku() {
     system("cls");
     int idPinjam;
@@ -666,9 +705,23 @@ void pinjamBuku() {
             cout << "Pengarang  : " << data_buku[i].pengarang << endl;
             cout << "Penerbit   : " << data_buku[i].penerbit << endl;
             cout << "Tahun Terbit: " << data_buku[i].tahunTerbit << endl;
+            cout << "Apakah Anda yakin ingin meminjam buku ini? (y/n): ";
+            char konfirmasi;
+            cin >> konfirmasi;
+
+            if (konfirmasi == 'y' || konfirmasi == 'Y') {
             cout << "\nBuku berhasil dipinjam!\n";
+            // Simpan data peminjaman ke file
+            simpanPeminjamanKeFile("peminjaman.txt", data_buku[i].judul);
             // Jika ingin menandai buku sudah dipinjam, bisa tambahkan status di struct buku
             break;
+        } else {
+            cout << "Peminjaman dibatalkan.\n";
+            cout << "Tekan enter untuk kembali...";
+            cin.ignore();
+            cin.get();
+            return;
+        }
         }
     }
     if (!ditemukan)
@@ -679,6 +732,7 @@ void pinjamBuku() {
     cin.ignore();
     cin.get();
 }
+
 
 void lihatDataBukuTahunTerbit()
 {
@@ -774,12 +828,33 @@ void lihatDataDiri()
     center("Data Diri Anda", "|", 40);
     cout << string(40, '-') << endl;
 
+    ifstream filePeminjaman("peminjaman.txt");
+    if (!filePeminjaman.is_open())
+    {
+        cout << "Gagal membuka file peminjaman!\n";
+        return;
+    }
+    string baris;
+    while (getline(filePeminjaman, baris)){
+        if (baris == "<<== START ==>>")
+        {   
+            getline(filePeminjaman, baris); // Username
+            username_pinjam = baris.substr(baris.find(":") + 2);
+
+            if (username_pinjam == username) {
+            
+                getline(filePeminjaman, baris); // Buku yang dipinjam
+                bukuDipinjam = baris.substr(baris.find("m:") + 2);
+            }
+        }
+    }
     
-    cout << "Username     : " << username << endl;
-    cout << "Tanggal Lahir: " << tgl_lahir << endl;
-    cout << "Alamat       : " << alamat << endl;
-    cout << "No. Telepon  : " << no_telp << endl;
-    cout << "Email        : " << email << endl;
+    cout << "Username                   : " << username << endl;
+    cout << "Tanggal Lahir              : " << tgl_lahir << endl;
+    cout << "Alamat                     : " << alamat << endl;
+    cout << "No. Telepon                : " << no_telp << endl;
+    cout << "Email                      : " << email << endl;
+    cout << "Buku yang sedang dipinjam  : " << bukuDipinjam << endl;
     cout << "\nTekan enter untuk kembali...";
     cin.ignore();
     cin.get();
@@ -946,4 +1021,21 @@ void center(string text, string batasSamping, int tabelLength)
     int fillSamping = (tabelLength - PanjangTeks) / 2; // Hitung space samping kanan kiri
 
     cout << batasSamping << setfill(' ') << setw(fillSamping - 1) << ' ' << text << setfill(' ') << setw((fillSamping - 1) + extraSpace) << ' ' << batasSamping << endl;
+}
+
+void simpanPeminjamanKeFile(const string &namafile, const string &bukuDipinjam)
+{
+    ofstream file(namafile, ios::app);
+    if (!file.is_open())
+    {
+        cout << "Gagal membuka file untuk menyimpan peminjaman!\n";
+        return;
+    }
+    file << "<<== START ==>>" << endl;
+    file << "Username: " << username << endl;
+    file << "Buku Dipinjam: " << bukuDipinjam << endl;
+    file << "<<== END ==>>" << endl;
+    cout << "Data peminjaman berhasil disimpan!\n";
+    file.close();
+
 }
