@@ -22,3 +22,13 @@ No. Telepon: 082499876567
 Email: subagyo@gmail.com
 Password: subagyo
 <<== END ==>>
+<<== START ==>>
+Username	: AmbaTukam
+Tanggal Lahir	: 18/3/1999
+Alamat	: Ngawi
+No. Telepon	: 0812345678
+Email	: @mas_amba
+Password	: amba
+Buku Dipinjam	: 
+<<== END ==>>
+Buku Dipinjam: 
