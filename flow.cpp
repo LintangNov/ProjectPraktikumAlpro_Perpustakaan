@@ -567,7 +567,7 @@ void lihatDataBuku()
     cout << "Pilih opsi: ";
     cin >> pilihan;
     system("cls");
-    cin.ignore(); // Bersihkan buffer
+    cin.ignore(); 
     cout << "=== Daftar Buku ===" << endl;
     switch (pilihan)
     {
