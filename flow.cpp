@@ -769,7 +769,7 @@ void lihatDataBukuID(){
 // ===========================
 void lihatDataDiri()
 {
-    system("cls");
+    system("cls");  
     cout << string(40, '-') << endl;
     center("Data Diri Anda", "|", 40);
     cout << string(40, '-') << endl;
