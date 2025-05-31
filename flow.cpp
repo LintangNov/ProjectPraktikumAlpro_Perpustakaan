@@ -59,8 +59,8 @@ struct pustakawan{
     string username;
     string password;
 } data_pustakawan[]={
-    {"fahmi", "123240055"},
-    {"lintang", "123240065"},
+    {"Fahmi Firdaus", "123240055"},
+    {"Waladi Lintang Novianto", "123240065"},
 };
 
 string username, username_pinjam, password, tgl_lahir, alamat, no_telp, email, bukuDipinjam;
@@ -84,9 +84,10 @@ int main()
         cout << string(50, '-') << endl;
         center("Sistem Peminjaman Buku Perpustakaan", "|", 50);
         cout << string(50, '-') << endl;
-        cout << "1. Masuk sebagai Pengunjung" << endl;
-        cout << "2. Masuk sebagai Pustakawan" << endl;
-        cout << "3. Keluar" << endl;
+        center ("1. Masuk sebagai Pengunjung                   ", "|", 50);
+        center ("2. Masuk sebagai Pustakawan                   ", "|", 50);
+        center ("3. Keluar                                     ", "|", 50);
+        cout << string(50, '-') << endl;
         cout << "Pilihan: ";
         cin >> mainMenuChoice;
 
