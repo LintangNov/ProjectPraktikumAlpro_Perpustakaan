@@ -17,6 +17,7 @@ Aplikasi ini merupakan proyek sederhana berbasis C++ untuk mengelola peminjaman 
   - Cari buku berdasarkan judul, pengarang, penerbit, atau tahun terbit
   - Lihat daftar buku (diurutkan secara ascending berdasarkan ID, judul, dan tahun terbit)
   - Pinjam buku
+  - Kembalikan buku yang dipinjam 
 
 - **Data Diri Pengunjung**
   - Pengunjung dapat melihat data diri yang ada di akunnya sendiri
@@ -25,5 +26,6 @@ Aplikasi ini merupakan proyek sederhana berbasis C++ untuk mengelola peminjaman 
 
 - Data buku disimpan dalam array of struct dan file eksternal (`data_buku.txt`)
 - Data pengunjung disimpan dalam file eksternal (`data_pengunjung.txt`)
+- Data peminjaman buku disimpan di file yang terpisah dari data buku dan data pengunjung ('peminjaman.txt')
 
 > Proyek ini dibuat untuk tugas akhir Praktikum Algoritma pemrograman Lanjut dengan menggunakan bahasa C++.
