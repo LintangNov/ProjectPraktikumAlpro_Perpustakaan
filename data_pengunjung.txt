@@ -38,3 +38,12 @@ No. Telepon         : 082322332323
 Email               : bahlillaha@gmail.com
 Password            : bahaha
 <<== END ==>>
+
+<<== START ==>>
+Username            : Fufu Fafa
+Tanggal Lahir       : 09/07/2000
+Alamat              : Solo
+No. Telepon         : 0897654321
+Email               : @fufufafa
+Password            : fufufafa
+<<== END ==>>

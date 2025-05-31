@@ -1,8 +1,12 @@
 <<== START ==>>
-Username: Bagyo
-Buku Dipinjam: Keamanan Jaringan
-<<== END ==>>
-<<== START ==>>
 Username: Wahyu
 Buku Dipinjam: Algoritma dan Pemrograman
+<<== END ==>>
+<<== START ==>>
+Username: Bagyo
+Buku Dipinjam: Data Science untuk Pemula
+<<== END ==>>
+<<== START ==>>
+Username: Fufu Fafa
+Buku Dipinjam: Statistik Dasar
 <<== END ==>>

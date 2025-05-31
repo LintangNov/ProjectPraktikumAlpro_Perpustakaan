@@ -126,6 +126,9 @@ int main()
                     break;;
                 default:
                     cout << "Pilihan tidak valid." << endl;
+                    cout << "Tekan enter untuk kembali...\n";
+                    cin.ignore();
+                    cin.get();
                 }
             } while (pengunjungChoice != 3);
             break;
@@ -137,6 +140,9 @@ int main()
             break;
         default:
             cout << "Pilihan tidak valid.\n";
+            cout << "Tekan enter untuk kembali ke menu utama...\n";
+            cin.ignore();
+            cin.get();
         }
     } while (mainMenuChoice != 3);
 }
@@ -152,7 +158,8 @@ void loginPustakawan()
     cout << string(40, '-') << endl;
     string usn, pass;
     cout << "Username: ";
-    cin >> usn;
+    cin.ignore();
+    getline(cin, usn); 
     cout << "Password: ";
     cin >> pass;
     bool ketemu = false;
@@ -175,10 +182,10 @@ void loginPustakawan()
 }
 
 void menuPustakawan()
-{   system("cls");
+{   
     int userMenuChoice;
     do
-    {
+    {system("cls");
         cout << string(40, '-') << endl;
         center("Menu Pustakawan", "|", 40);
         cout << string(40, '-') << endl;
@@ -210,6 +217,9 @@ void menuPustakawan()
             break;
         default:
             cout << "Pilihan tidak valid.\n";
+            cout << "Tekan enter untuk kembali...\n";
+            cin.ignore();
+            cin.get();
         }
     } while (userMenuChoice != 5);
 }
@@ -254,6 +264,9 @@ void menuPengunjung() {
             break;
         default:
             cout << "Pilihan tidak valid.\n";
+            cout << "Tekan enter untuk kembali ke menu utama...\n";
+            cin.ignore();
+            cin.get();
         }
     } while (pengunjungMenuChoice != 6);
 }
@@ -268,7 +281,8 @@ int signInPengunjung(){
     cout << string(40, '-') << endl;
     string usn, pass;
     cout << "Username: ";
-    cin >> usn;
+    cin.ignore();
+    getline(cin, usn); 
     cout << "Password: ";
     cin >> pass;
     ifstream filePengunjung("data_pengunjung.txt");
@@ -347,7 +361,8 @@ void signUpPengunjung()
     center("Sign Up", "|", 40);
     cout << string(40, '-') << endl;
     cout << "Masukkan username baru: ";
-    cin >> username;
+    cin.ignore();
+    getline(cin, username);
     string baris;
     while (getline(fileCek, baris)) {
         if (baris == "<<== START ==>>") {
@@ -674,7 +689,7 @@ void lihatDataBuku()
 }
 
 void lihatDataPeminjaman(){
-  
+    system("cls");
     ofstream file("peminjaman.txt", ios:: app);
     if (!file.is_open())
     {
@@ -746,10 +761,10 @@ void pinjamBuku() {
         {
             ditemukan = true;
             cout << "\nBuku yang akan dipinjam:" << endl;
-            cout << "Judul      : " << data_buku[i].judul << endl;
-            cout << "Pengarang  : " << data_buku[i].pengarang << endl;
-            cout << "Penerbit   : " << data_buku[i].penerbit << endl;
-            cout << "Tahun Terbit: " << data_buku[i].tahunTerbit << endl;
+            cout << "Judul          : " << data_buku[i].judul << endl;
+            cout << "Pengarang      : " << data_buku[i].pengarang << endl;
+            cout << "Penerbit       : " << data_buku[i].penerbit << endl;
+            cout << "Tahun Terbit   : " << data_buku[i].tahunTerbit << endl;
             cout << "Apakah Anda yakin ingin meminjam buku ini? (y/n): ";
             char konfirmasi;
             cin >> konfirmasi;
@@ -981,7 +996,7 @@ void lihatDataDiri()
             if (username_pinjam == username) {
             
                 getline(filePeminjaman, baris); // Buku yang dipinjam
-                bukuDipinjam = baris.substr(baris.find("m:") + 2);
+                bukuDipinjam = baris.substr(baris.find(":") + 2);
             }
         }
     }
