@@ -175,10 +175,12 @@ void loginPustakawan()
 }
 
 void menuPustakawan()
-{   system("cls");
-    int userMenuChoice;
+{   
+    int PustakaMenuChoice;
     do
-    {
+    {   
+        system("cls");
+        
         cout << string(40, '-') << endl;
         center("Menu Pustakawan", "|", 40);
         cout << string(40, '-') << endl;
@@ -188,9 +190,9 @@ void menuPustakawan()
         cout << "4. Lihat Data Peminjaman" << endl;
         cout << "5. Logout" << endl;
         cout << "Pilihan: ";
-        cin >> userMenuChoice;
+        cin >> PustakaMenuChoice;
 
-        switch (userMenuChoice)
+        switch (PustakaMenuChoice)
         {
         case 1:
             tambahDataBuku();
@@ -211,7 +213,7 @@ void menuPustakawan()
         default:
             cout << "Pilihan tidak valid.\n";
         }
-    } while (userMenuChoice != 5);
+    } while (PustakaMenuChoice != 5);
 }
 
 void menuPengunjung() {
