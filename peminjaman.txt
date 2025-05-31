@@ -1,12 +1,8 @@
 <<== START ==>>
-Username: Ananda
-Buku Dipinjam: Sistem Informasi
+Username: Bagyo
+Buku Dipinjam: Keamanan Jaringan
 <<== END ==>>
 <<== START ==>>
-Username: Ananda
-Buku Dipinjam: Artificial Intelligence
-<<== END ==>>
-<<== START ==>>
-Username: Ananda
-Buku Dipinjam: Data Science untuk Pemula
+Username: Wahyu
+Buku Dipinjam: Algoritma dan Pemrograman
 <<== END ==>>

@@ -26,6 +26,7 @@ void ubahDataBuku();
 void CariBuku();
 void lihatDataBuku();
 void pinjamBuku();
+void kembalikanBuku();
 void lihatDataBukuTahunTerbit();
 void lihatDataBukuJudul();
 void lihatDataBukuID();
@@ -225,8 +226,9 @@ void menuPengunjung() {
         cout << "1. Cari Buku" << endl;
         cout << "2. Lihat Data Buku" << endl;
         cout << "3. Pinjam Buku" << endl;
-        cout << "4. Lihat Data Diri" << endl;
-        cout << "5. Logout" << endl;
+        cout << "4. Kembalikan Buku" << endl;
+        cout << "5. Lihat Data Diri" << endl;
+        cout << "6. Logout" << endl;
         cout << "Pilihan: ";
         cin >> pengunjungMenuChoice;
 
@@ -242,15 +244,18 @@ void menuPengunjung() {
             pinjamBuku();
             break;
         case 4:
-            lihatDataDiri();
+            kembalikanBuku();
             break;
         case 5:
+            lihatDataDiri();
+            break;
+        case 6:
             cout << "\nLogout dari akun Pengunjung.\n";
             break;
         default:
             cout << "Pilihan tidak valid.\n";
         }
-    } while (pengunjungMenuChoice != 5);
+    } while (pengunjungMenuChoice != 6);
 }
 
 // ===========================
@@ -290,6 +295,22 @@ int signInPengunjung(){
             email = baris.substr(baris.find(":") + 2);
             getline(filePengunjung, baris); // Password
             passwordFile = baris.substr(baris.find(":") + 2);
+
+            ifstream fileCekPeminjaman("peminjaman.txt");
+            if (!fileCekPeminjaman.is_open()) {
+                cout << "Gagal membuka file peminjaman!\n";
+                return 0;
+            }
+            string barisPeminjaman;
+            while (getline(fileCekPeminjaman, barisPeminjaman)) {
+                if (barisPeminjaman == "<<== START ==>>") {
+                    getline(fileCekPeminjaman, barisPeminjaman); // Username
+                    if (usernameFile == barisPeminjaman.substr(barisPeminjaman.find(":")+2)){
+                        getline(fileCekPeminjaman, barisPeminjaman);
+                        bukuDipinjam = barisPeminjaman.substr(barisPeminjaman.find(":")+2);
+                    }
+                }
+            }
 
             if (usernameFile == usn && passwordFile == pass) {
 
@@ -367,8 +388,7 @@ void signUpPengunjung()
     filePengunjung << left << setw(20)<<"Alamat" << ": " << alamat << endl;
     filePengunjung << left << setw(20)<<"No. Telepon" << ": " << no_telp << endl;
     filePengunjung << left << setw(20)<<"Email" << ": " << email << endl;
-    filePengunjung << left << setw(20)<<"Password" << ": " << password << endl;
-    filePengunjung << left << setw(20)<<"Buku Dipinjam" << ": " << bukuDipinjam << endl; 
+    filePengunjung << left << setw(20)<<"Password" << ": " << password << endl; 
     filePengunjung << "<<== END ==>>" << endl;
     filePengunjung.close();
     cout << "\nAkun berhasil dibuat! Silakan login.\n";
@@ -533,7 +553,7 @@ void ubahDataBuku()
             cout << "\nPilih data yang ingin diubah:" << endl;
             cout << "1. Judul\n2. Tahun Terbit\n3. Pengarang\n4. Penerbit\nPilihan: ";
             cin >> pilihan;
-            cin.ignore(); // Bersihkan buffer
+            cin.ignore(); 
 
             switch (pilihan)
             {
@@ -688,14 +708,39 @@ void lihatDataPeminjaman(){
 
 void pinjamBuku() {
     system("cls");
+    ifstream filePeminjaman("peminjaman.txt");
+    string baris;
+    bool sudahPinjam = false;
+    while (getline(filePeminjaman, baris)) {
+        if (baris == "<<== START ==>>") {
+            getline(filePeminjaman, baris); // Username
+            string usernameFile = baris.substr(baris.find(":") + 2);
+            if (usernameFile == username) {
+                sudahPinjam = true;         // kalo username peminjam udah ada di file, suruh kembalikan buku dulu
+                break;
+            }
+            getline(filePeminjaman, baris); // buku dipinjam
+            getline(filePeminjaman, baris); // <<== END ==>>
+        }
+    }
+    filePeminjaman.close();
+
+    if (sudahPinjam) {
+        cout << "Anda masih memiliki buku yang belum dikembalikan!\n";
+        cout << "Silakan kembalikan buku tersebut sebelum meminjam buku lain.\n";
+        cout << "Tekan enter untuk kembali...";
+        cin.ignore();
+        cin.get();
+        return;
+    }
+
     int idPinjam;
     cout << "=== Pinjam Buku ===" << endl;
     cout << "Masukkan ID Buku yang ingin dipinjam: ";
     cin >> idPinjam;
 
-    // Cari buku berdasarkan ID
     bool ditemukan = false;
-    for (int i = 1; i <= 50; i++)
+    for (int i = 1; i <= 200; i++)
     {
         if (data_buku[i].idBuku == idPinjam)
         {
@@ -710,18 +755,18 @@ void pinjamBuku() {
             cin >> konfirmasi;
 
             if (konfirmasi == 'y' || konfirmasi == 'Y') {
-            cout << "\nBuku berhasil dipinjam!\n";
-            // Simpan data peminjaman ke file
-            simpanPeminjamanKeFile("peminjaman.txt", data_buku[i].judul);
-            // Jika ingin menandai buku sudah dipinjam, bisa tambahkan status di struct buku
-            break;
-        } else {
-            cout << "Peminjaman dibatalkan.\n";
-            cout << "Tekan enter untuk kembali...";
-            cin.ignore();
-            cin.get();
-            return;
-        }
+                cout << "\nBuku berhasil dipinjam!\n";
+                // Simpan data peminjaman ke file
+                simpanPeminjamanKeFile("peminjaman.txt", data_buku[i].judul);
+                bukuDipinjam = data_buku[i].judul; // update global
+                break;
+            } else {
+                cout << "Peminjaman dibatalkan.\n";
+                cout << "Tekan enter untuk kembali...";
+                cin.ignore();
+                cin.get();
+                return;
+            }
         }
     }
     if (!ditemukan)
@@ -731,6 +776,98 @@ void pinjamBuku() {
     cout << "\nTekan enter untuk kembali...";
     cin.ignore();
     cin.get();
+}
+
+void kembalikanBuku() {
+    system("cls");
+    cout << string(50, '-') << endl;
+    center("Kembalikan Buku", "|", 50);
+    cout << string(50, '-') << endl;
+
+    // Cari buku yang dipinjam pengunjung
+    string judulPinjam;
+    ifstream cekPinjam("peminjaman.txt");
+    string baris;
+    bool adaPinjaman = false;
+    while (getline(cekPinjam, baris)) {
+        if (baris == "<<== START ==>>") {
+            getline(cekPinjam, baris); // Username
+            string usernameFile = baris.substr(baris.find(":") + 2);
+            getline(cekPinjam, baris); // Buku Dipinjam
+            string bukuFile = baris.substr(baris.find(":") + 2);
+            if (usernameFile == username) {
+                judulPinjam = bukuFile;
+                adaPinjaman = true;
+                break;
+            }
+            getline(cekPinjam, baris); // <<== END ==>>
+        }
+    }
+    cekPinjam.close();
+
+    if (!adaPinjaman) {
+        cout << "Anda tidak memiliki buku yang sedang dipinjam.\n";
+        cout << "Tekan enter untuk kembali...";
+        cin.ignore();
+        cin.get();
+        return;
+    }
+
+    cout << "Anda sedang dalam masa peminjaman buku: " << judulPinjam << endl;
+    cout << "Apakah anda ingin kembalikan buku ini? (y/n): ";
+    char confirm;
+    cin >> confirm;
+
+    if (confirm == 'y' || confirm == 'Y') {
+        ifstream filePeminjaman("peminjaman.txt");
+        ofstream temp("temp.txt");
+        string baris;
+        while (getline(filePeminjaman, baris)) {
+            if (baris == "<<== START ==>>") {
+                // Baca blok 4 baris
+                string barisData[4];
+                barisData[0] = baris; // <<== START ==>>
+                getline(filePeminjaman, barisData[1]); // Username
+                getline(filePeminjaman, barisData[2]); // Buku Dipinjam
+                getline(filePeminjaman, barisData[3]); // <<== END ==>>
+
+                string usernameFile = barisData[1].substr(barisData[1].find(":") + 2);
+                if (usernameFile == username) {
+                    // Blok ini di-skip (dihapus)
+                    continue;
+                } else {
+                    // Blok lain tetap ditulis ke temp.txt
+                    for (int i = 0; i < 4; i++) {
+                        temp << barisData[i] << endl;
+                    }
+                }
+            }
+        }
+        filePeminjaman.close();
+        temp.close();
+
+        remove("peminjaman.txt");
+        rename("temp.txt", "peminjaman.txt");
+
+        bukuDipinjam = ""; // 
+        cout << "Buku berhasil dikembalikan!\n";
+    }
+    else if (confirm == 'n' || confirm == 'N') {
+        cout << "Pengembalian dibatalkan.\n";
+    }
+    else {
+        cout << "Pilihan tidak valid.\nUlangi input!\n";
+        cout << "Tekan enter untuk kembali...";
+        cin.ignore();
+        cin.get();
+        kembalikanBuku();
+        return;
+    }
+
+    cout << "Tekan apapun untuk kembali......\n";
+    cin.ignore();
+    cin.get();
+    return;
 }
 
 

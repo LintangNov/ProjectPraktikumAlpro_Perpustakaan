@@ -28,10 +28,8 @@ Tanggal Lahir	    : 18/3/1999
 Alamat	            : Ngawi
 No. Telepon	        : 0812345678
 Email	            : @mas_amba
-Password	        : amba
-Buku Dipinjam	    : 
+Password	        : amba 
 <<== END ==>>
-Buku Dipinjam: 
 <<== START ==>>
 Username            : Bahlul
 Tanggal Lahir       : 12/3
@@ -39,5 +37,4 @@ Alamat              : Jalan Bahlil Lahab
 No. Telepon         : 082322332323
 Email               : bahlillaha@gmail.com
 Password            : bahaha
-Buku Dipinjam       : 
 <<== END ==>>
