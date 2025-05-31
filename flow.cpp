@@ -84,9 +84,9 @@ int main()
         cout << string(50, '-') << endl;
         center("Sistem Peminjaman Buku Perpustakaan", "|", 50);
         cout << string(50, '-') << endl;
-        center ("1. Masuk sebagai Pengunjung                   ", "|", 50);
-        center ("2. Masuk sebagai Pustakawan                   ", "|", 50);
-        center ("3. Keluar                                     ", "|", 50);
+        center ("1. Masuk sebagai Pengunjung       ", "|", 50);
+        center ("2. Masuk sebagai Pustakawan       ", "|", 50);
+        center ("3. Keluar                         ", "|", 50);
         cout << string(50, '-') << endl;
         cout << "Pilihan: ";
         cin >> mainMenuChoice;
@@ -99,11 +99,12 @@ int main()
             {
                 system("cls");
                 cout << string(40, '-') << endl;
-                center("Pengunjung", "|", 40);
+                center("Masuk Sebagai Pengunjung", "|", 40);
                 cout << string(40, '-') << endl;
-                cout << "1. Sign In" << endl;
-                cout << "2. Sign Up" << endl;
-                cout << "3. Kembali" << endl;
+                center("1. Sign In            ", "|", 40);
+                center("2. Sign Up            ", "|", 40);
+                center("3. Kembali            ", "|", 40);
+                cout << string(40, '-') << endl;
                 cout << "Pilihan: ";
                 cin >> pengunjungChoice;
 
@@ -192,12 +193,14 @@ void menuPustakawan()
         cout << string(40, '-') << endl;
         center("Menu Pustakawan", "|", 40);
         cout << string(40, '-') << endl;
-        cout << "1. Tambah Data Buku" << endl;
-        cout << "2. Hapus Data Buku" << endl;
-        cout << "3. Ubah Data Buku" << endl;
-        cout << "4. Lihat Data Peminjaman" << endl;
-        cout << "5. Logout" << endl;
+        center("1. Tambah Data Buku         ", "|", 40);
+        center("2. Hapus Data Buku          ", "|", 40);
+        center("3. Ubah Data Buku           ", "|", 40);
+        center("4. Lihat Data Peminjaman    ", "|", 40);
+        center("5. Logout                   ", "|", 40);
+        cout << string(40, '-') << endl;
         cout << "Pilihan: ";
+
         cin >> PustakaMenuChoice;
 
         switch (PustakaMenuChoice)
@@ -236,12 +239,13 @@ void menuPengunjung() {
         cout << string(40, '-') << endl;
         center("Menu Pengunjung", "|", 40);
         cout << string(40, '-') << endl;
-        cout << "1. Cari Buku" << endl;
-        cout << "2. Lihat Data Buku" << endl;
-        cout << "3. Pinjam Buku" << endl;
-        cout << "4. Kembalikan Buku" << endl;
-        cout << "5. Lihat Data Diri" << endl;
-        cout << "6. Logout" << endl;
+        center("1. Cari Buku            ", "|", 40);
+        center("2. Lihat Data Buku      ", "|", 40);
+        center("3. Pinjam Buku          ", "|", 40);
+        center("4. Kembalikan Buku      ", "|", 40);
+        center("5. Lihat Data Diri      ", "|", 40);
+        center("6. Logout               ", "|", 40);
+        cout << string(40, '-') << endl;
         cout << "Pilihan: ";
         cin >> pengunjungMenuChoice;
 
@@ -563,10 +567,10 @@ void ubahDataBuku()
         {
             ditemukan = true;
             cout << "\nData Buku Saat Ini:" << endl;
-            cout << "1. Judul      : " << data_buku[i].judul << endl;
-            cout << "2. Tahun Terbit: " << data_buku[i].tahunTerbit << endl;
-            cout << "3. Pengarang  : " << data_buku[i].pengarang << endl;
-            cout << "4. Penerbit   : " << data_buku[i].penerbit << endl;
+            cout << "1. Judul        : " << data_buku[i].judul << endl;
+            cout << "2. Tahun Terbit : " << data_buku[i].tahunTerbit << endl;
+            cout << "3. Pengarang    : " << data_buku[i].pengarang << endl;
+            cout << "4. Penerbit     : " << data_buku[i].penerbit << endl;
 
             cout << "\nPilih data yang ingin diubah:" << endl;
             cout << "1. Judul\n2. Tahun Terbit\n3. Pengarang\n4. Penerbit\nPilihan: ";
@@ -620,11 +624,13 @@ void CariBuku()
     int cariTahun;
     string cari;
     int basedOn;
-    cout << "\n==== Cari Buku Berdasarkan ====" << endl;
-    cout << "1. Judul" << endl;
-    cout << "2. Pengarang" << endl;
-    cout << "3. Penerbit" << endl;
-    cout << "4. Tahun Terbit" << endl;
+    cout << string(40,'-') << endl;
+    center( "Cari Buku Berdasarkan", "|", 40);
+    cout << string(40, '-') << endl;
+    center("1. Judul Buku            ", "|", 40);
+    center("2. Pengarang Buku        ", "|", 40);
+    center("3. Penerbit Buku         ", "|", 40);
+    center("4. Tahun Terbit          ", "|", 40);
     cout << "Pilih berdasarkan: ";
     cin >> basedOn;
     switch (basedOn)
@@ -666,12 +672,13 @@ void lihatDataBuku()
     cout << string(40, '-') << endl;
     center("Daftar Buku", "|", 40);
     cout << string(40, '-') << endl;
+    center("Urutkan berdasarkan:       ", "|", 40);
+    center("1. Judul                   ", "|", 40);
+    center("2. Tahun Terbit            ", "|", 40);
+    center("3. ID Buku                 ", "|", 40);
+    center("4. Kembali ke Menu Utama   ", "|", 40);
+    cout << string(40, '-') << endl;
     int pilihan;
-    cout << "\nUrutkan Berdasarkan: \n";
-    cout << "1. Judul" << endl;
-    cout << "2. Tahun Terbit" << endl;
-    cout << "3. ID Buku" << endl;
-    cout << "4. Kembali ke Menu Utama" << endl;
     cout << "Pilih opsi: ";
     cin >> pilihan;
 
@@ -692,7 +699,7 @@ void lihatDataBuku()
 }
 
 void lihatDataPeminjaman(){
-    system("cls");
+  
     ofstream file("peminjaman.txt", ios:: app);
     if (!file.is_open())
     {
@@ -702,17 +709,18 @@ void lihatDataPeminjaman(){
     string baris;
     bool exists = false;
     ifstream filePeminjaman("peminjaman.txt");
-    cout << "Data Peminjaman:\n";
+    cout << "Data Peminjaman:\n\n";
     while (getline(filePeminjaman, baris))
     {
         if (baris == "<<== START ==>>")
         {
             exists = true;
-            cout << "=====================\n";
+            
             while (getline(filePeminjaman, baris) && baris != "<<== END ==>>")
             {
                 cout << baris << endl;
             }
+            cout << "------------------------------------------\n\n";
         }
     } if (!exists)
     {
@@ -1122,7 +1130,7 @@ void QuickSort(int low, int high){
 
 void MasukkanDataKeFile(const string &namafile)
 {
-    ofstream file(namafile, ios::app);
+    ofstream file(namafile, ios::trunc);
     if (!file.is_open())
     {
         cout << "Gagal membuka file!!" << endl;
