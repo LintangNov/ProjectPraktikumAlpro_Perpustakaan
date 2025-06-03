@@ -327,7 +327,7 @@ int signInPengunjung(){
                 if (barisPeminjaman == "<<== START ==>>") {
                     getline(fileCekPeminjaman, barisPeminjaman); // Username
                     if (usernameFile == barisPeminjaman.substr(barisPeminjaman.find(":")+2)){
-                        getline(fileCekPeminjaman, barisPeminjaman);
+                        getline(fileCekPeminjaman, barisPeminjaman); // buku dipinjam
                         bukuDipinjam = barisPeminjaman.substr(barisPeminjaman.find(":")+2);
                     }
                 }
@@ -426,20 +426,23 @@ void tambahDataBuku()
     cout << string(40, '-') << endl;
     center("Daftar Buku Saat Ini", "|", 40);
     cout << string(40, '-') << endl;
-    cout << left << setw(4) << setfill(' ') << "ID"
-         << setw(30) << "Judul"
-         << setw(25) << "Pengarang"
-         << setw(15) << "Penerbit"
-         << setw(6) << "Tahun" << endl;
+    cout << string(86, '-') << endl;
+    cout << left << "|" << setw(4) << setfill(' ') << "ID"
+         << "|" << setw(30) << "Judul"
+         << "|" << setw(25) << "Pengarang"
+         << "|" << setw(15) << "Penerbit"
+         << "|" << setw(6) << "Tahun" << "|" << endl;
+    cout << string(86, '-') << endl;
     for (int i = 1; i <= 200; i++) {
         if (data_buku[i].idBuku != 0) {
-            cout << left << setw(4) << setfill(' ') << data_buku[i].idBuku
-                 << setw(30) << data_buku[i].judul
-                 << setw(25) << data_buku[i].pengarang
-                 << setw(15) << data_buku[i].penerbit
-                 << setw(6) << data_buku[i].tahunTerbit << endl;
+            cout << "|" << setw(4) << data_buku[i].idBuku
+                 << "|" << setw(30) << data_buku[i].judul
+                 << "|" << setw(25) << data_buku[i].pengarang
+                 << "|" << setw(15) << data_buku[i].penerbit
+                 << "|" << setw(6) << data_buku[i].tahunTerbit << "|" << endl;
         }
     }
+    cout << string(86, '-') << endl;
     cout << endl;
     cout << string(40, '-') << endl;
     center("Tambah Data Buku", "|", 40);
@@ -482,20 +485,22 @@ void hapusDataBuku()
     cout << string(40, '-') << endl;
     center("Daftar Buku Saat Ini", "|", 40);
     cout << string(40, '-') << endl;
-    cout << left << setw(4) << setfill(' ') << "ID"
-         << setw(30) << "Judul"
-         << setw(25) << "Pengarang"
-         << setw(15) << "Penerbit"
-         << setw(6) << "Tahun" << endl;
+    cout << left << "|" << setw(4) << setfill(' ') << "ID"
+         << "|" << setw(30) << "Judul"
+         << "|" << setw(25) << "Pengarang"
+         << "|" << setw(15) << "Penerbit"
+         << "|" << setw(6) << "Tahun" << "|" << endl;
+    cout << string(86, '-') << endl;
     for (int i = 1; i <= 200; i++) {
         if (data_buku[i].idBuku != 0) {
-            cout << left << setw(4) << setfill(' ') << data_buku[i].idBuku
-                 << setw(30) << data_buku[i].judul
-                 << setw(25) << data_buku[i].pengarang
-                 << setw(15) << data_buku[i].penerbit
-                 << setw(6) << data_buku[i].tahunTerbit << endl;
+            cout << "|" << setw(4) << data_buku[i].idBuku
+                 << "|" << setw(30) << data_buku[i].judul
+                 << "|" << setw(25) << data_buku[i].pengarang
+                 << "|" << setw(15) << data_buku[i].penerbit
+                 << "|" << setw(6) << data_buku[i].tahunTerbit << "|" << endl;
         }
     }
+    cout << string(86, '-') << endl;
     cout << endl;
     cout << string(40, '-') << endl;
     center("Hapus Data Buku", "|", 40);
@@ -537,20 +542,22 @@ void ubahDataBuku()
     cout << string(40, '-') << endl;
     center("Daftar Buku Saat Ini", "|", 40);
     cout << string(40, '-') << endl;
-    cout << left << setw(4) << setfill(' ') << "ID"
-         << setw(30) << "Judul"
-         << setw(25) << "Pengarang"
-         << setw(15) << "Penerbit"
-         << setw(6) << "Tahun" << endl;
+    cout << left << "|" << setw(4) << setfill(' ') << "ID"
+         << "|" << setw(30) << "Judul"
+         << "|" << setw(25) << "Pengarang"
+         << "|" << setw(15) << "Penerbit"
+         << "|" << setw(6) << "Tahun" << "|" << endl;
+    cout << string(86, '-') << endl;
     for (int i = 1; i <= 200; i++) {
         if (data_buku[i].idBuku != 0) {
-            cout << left << setw(4) << setfill(' ') << data_buku[i].idBuku
-                 << setw(30) << data_buku[i].judul
-                 << setw(25) << data_buku[i].pengarang
-                 << setw(15) << data_buku[i].penerbit
-                 << setw(6) << data_buku[i].tahunTerbit << endl;
+            cout << "|" << setw(4) << data_buku[i].idBuku
+                 << "|" << setw(30) << data_buku[i].judul
+                 << "|" << setw(25) << data_buku[i].pengarang
+                 << "|" << setw(15) << data_buku[i].penerbit
+                 << "|" << setw(6) << data_buku[i].tahunTerbit << "|" << endl;
         }
     }
+    cout << string(86, '-') << endl;
     cout << endl;
     cout << string(40, '-') << endl;
     center("Ubah Data Buku", "|", 40);
@@ -850,7 +857,7 @@ void kembalikanBuku() {
         string baris;
         while (getline(filePeminjaman, baris)) {
             if (baris == "<<== START ==>>") {
-                // Baca blok 4 baris
+                
                 string barisData[4];
                 barisData[0] = baris; // <<== START ==>>
                 getline(filePeminjaman, barisData[1]); // Username
@@ -862,7 +869,7 @@ void kembalikanBuku() {
                     // Blok ini di-skip (dihapus)
                     continue;
                 } else {
-                    // Blok lain tetap ditulis ke temp.txt
+                    
                     for (int i = 0; i < 4; i++) {
                         temp << barisData[i] << endl;
                     }
@@ -903,20 +910,21 @@ void lihatDataBukuTahunTerbit()
     cout << "\n=== Daftar Buku Berdasarkan Tahun Terbit ===" << endl;
     int n = sizeof(data_buku) / sizeof(data_buku[0]);
     ShellSort(n);
-    cout << left << setw(4) << setfill(' ') << "ID"
-         << setw(30) << "Judul"
-         << setw(25) << "Pengarang"
-         << setw(15) << "Penerbit"
-         << setw(6) << "Tahun" << endl;
+    cout << left << "|" << setw(4) << setfill(' ') << "ID"
+         << "|" << setw(30) << "Judul"
+         << "|" << setw(25) << "Pengarang"
+         << "|" << setw(15) << "Penerbit"
+         << "|" << setw(6) << "Tahun" << "|" << endl;
+    cout << string(86, '-') << endl;
     for (int i = 1; i <= n; i++)
     {
         if (data_buku[i].idBuku != 0)
         {
-            cout << left << setw(4) << setfill(' ') << data_buku[i].idBuku
-                 << setw(30) << data_buku[i].judul
-                 << setw(25) << data_buku[i].pengarang
-                 << setw(15) << data_buku[i].penerbit
-                 << setw(6) << data_buku[i].tahunTerbit << endl;
+            cout << "|" << setw(4) << data_buku[i].idBuku
+                 << "|" << setw(30) << data_buku[i].judul
+                 << "|" << setw(25) << data_buku[i].pengarang
+                 << "|" << setw(15) << data_buku[i].penerbit
+                 << "|" << setw(6) << data_buku[i].tahunTerbit << "|" << endl;
         }
     }
     cout << "\nTekan enter untuk kembali...";
@@ -932,20 +940,21 @@ void lihatDataBukuJudul()
     cout << string(40, '-') << endl;
     int n = sizeof(data_buku) / sizeof(data_buku[0]);
     BubbleSortString(n);
-    cout << left << setw(4) << setfill(' ') << "ID"
-         << setw(30) << "Judul"
-         << setw(25) << "Pengarang"
-         << setw(15) << "Penerbit"
-         << setw(6) << "Tahun" << endl;
+    cout << left << "|" << setw(4) << setfill(' ') << "ID"
+         << "|" << setw(30) << "Judul"
+         << "|" << setw(25) << "Pengarang"
+         << "|" << setw(15) << "Penerbit"
+         << "|" << setw(6) << "Tahun" << "|" << endl;
+    cout << string(86, '-') << endl;
     for (int i = 1; i <= n; i++)
     {
         if (data_buku[i].idBuku != 0)
         {
-            cout << left << setw(4) << setfill(' ') << data_buku[i].idBuku
-                 << setw(30) << data_buku[i].judul
-                 << setw(25) << data_buku[i].pengarang
-                 << setw(15) << data_buku[i].penerbit
-                 << setw(6) << data_buku[i].tahunTerbit << endl;
+            cout << "|" << setw(4) << data_buku[i].idBuku
+                 << "|" << setw(30) << data_buku[i].judul
+                 << "|" << setw(25) << data_buku[i].pengarang
+                 << "|" << setw(15) << data_buku[i].penerbit
+                 << "|" << setw(6) << data_buku[i].tahunTerbit << "|" << endl;
         }
     }
     cout << "\nTekan enter untuk kembali...";
@@ -960,20 +969,21 @@ void lihatDataBukuID(){
     cout << string(40, '-') << endl;
     int n = sizeof(data_buku) / sizeof(data_buku[0]);
     QuickSort(1, n-1);
-    cout << left << setw(4) << setfill(' ') << "ID"
-         << setw(30) << "Judul"
-         << setw(25) << "Pengarang"
-         << setw(15) << "Penerbit"
-         << setw(6) << "Tahun" << endl;
+    cout << left << "|" << setw(4) << setfill(' ') << "ID"
+         << "|" << setw(30) << "Judul"
+         << "|" << setw(25) << "Pengarang"
+         << "|" << setw(15) << "Penerbit"
+         << "|" << setw(6) << "Tahun" << "|" << endl;
+    cout << string(86, '-') << endl;
     for (int i = 1; i <= n; i++)
     {
         if (data_buku[i].idBuku != 0)
         {
-            cout << left << setw(4) << setfill(' ') << data_buku[i].idBuku
-                 << setw(30) << data_buku[i].judul
-                 << setw(25) << data_buku[i].pengarang
-                 << setw(15) << data_buku[i].penerbit
-                 << setw(6) << data_buku[i].tahunTerbit << endl;
+            cout << "|" << setw(4) << data_buku[i].idBuku
+                 << "|" << setw(30) << data_buku[i].judul
+                 << "|" << setw(25) << data_buku[i].pengarang
+                 << "|" << setw(15) << data_buku[i].penerbit
+                 << "|" << setw(6) << data_buku[i].tahunTerbit << "|" << endl;
         }
     }
     cout << "\nTekan enter untuk kembali...";
@@ -1031,20 +1041,27 @@ void sequentialTahun(int cariTahun)
     system("cls");
     bool ketemu = false;
     buku *ptr = data_buku;
-    for (int i = 1; i <= 50; i++)
+    
+    cout << string(86, '-') << endl;
+    cout << left << "|" << setw(4) << setfill(' ') << "ID"
+         << "|" << setw(30) << "Judul"
+         << "|" << setw(25) << "Pengarang"
+         << "|" << setw(15) << "Penerbit"
+         << "|" << setw(6) << "Tahun" << "|" << endl;
+    cout << string(86, '-') << endl;
+    for (int i = 1; i <= 200; i++)
     {
-        if ((ptr + i)->tahunTerbit == cariTahun)
+        if ((ptr + i)->tahunTerbit == cariTahun && (ptr + i)->idBuku != 0)
         {
-            cout << "Buku ditemukan: " << endl;
-            cout << "ID Buku: " << (ptr + i)->idBuku << endl;
-            cout << "Judul: " << (ptr + i)->judul << endl;
-            cout << "Tahun Terbit: " << (ptr + i)->tahunTerbit << endl;
-            cout << "Pengarang: " << (ptr + i)->pengarang << endl;
-            cout << "Penerbit: " << (ptr + i)->penerbit << endl
-                 << endl;
+            cout << "|" << setw(4) << (ptr + i)->idBuku
+                 << "|" << setw(30) << (ptr + i)->judul
+                 << "|" << setw(25) << (ptr + i)->pengarang
+                 << "|" << setw(15) << (ptr + i)->penerbit
+                 << "|" << setw(6) << (ptr + i)->tahunTerbit << "|" << endl;
             ketemu = true;
         }
     }
+    cout << string(86, '-') << endl;
     if (!ketemu)
     {
         cout << "Buku tidak ditemukan." << endl;
@@ -1053,24 +1070,28 @@ void sequentialTahun(int cariTahun)
 
 void sequentialString(string cariPengarang)
 {
-    int i = 1;
     bool ketemu = false;
-    while (i <= 200 && data_buku[i].idBuku != 0)
+    
+    cout << string(86, '-') << endl;
+    cout << left << "|" << setw(4) << setfill(' ') << "ID"
+         << "|" << setw(30) << "Judul"
+         << "|" << setw(25) << "Pengarang"
+         << "|" << setw(15) << "Penerbit"
+         << "|" << setw(6) << "Tahun" << "|" << endl;
+    cout << string(86, '-') << endl;
+    for (int i = 1; i <= 200; i++)
     {
-        if (data_buku[i].pengarang == cariPengarang || data_buku[i].judul == cariPengarang || data_buku[i].penerbit == cariPengarang)
+        if (data_buku[i].idBuku != 0 && (data_buku[i].pengarang == cariPengarang || data_buku[i].judul == cariPengarang || data_buku[i].penerbit == cariPengarang))
         {
-            system("cls");
-            cout << "Buku ditemukan: " << endl;
-            cout << "ID Buku: " << data_buku[i].idBuku << endl;
-            cout << "Judul: " << data_buku[i].judul << endl;
-            cout << "Tahun Terbit: " << data_buku[i].tahunTerbit << endl;
-            cout << "Pengarang: " << data_buku[i].pengarang << endl;
-            cout << "Penerbit: " << data_buku[i].penerbit << endl
-                 << endl;
+            cout << "|" << setw(4) << data_buku[i].idBuku
+                 << "|" << setw(30) << data_buku[i].judul
+                 << "|" << setw(25) << data_buku[i].pengarang
+                 << "|" << setw(15) << data_buku[i].penerbit
+                 << "|" << setw(6) << data_buku[i].tahunTerbit << "|" << endl;
             ketemu = true;
         }
-        i++;
     }
+    cout << string(86, '-') << endl;
     if (!ketemu)
     {
         cout << "Buku tidak ditemukan." << endl;

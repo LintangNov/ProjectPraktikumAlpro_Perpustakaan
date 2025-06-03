@@ -49,4 +49,4 @@
 30;Teknologi Cloud;2021;Chris Evans;Penerbit AD;
 41;Web Development;2019;Siti Azizah;Penerbit AO;
 51;Belajar Menerima Segalanya;2021;Andin;Grhatama;
-52;Menjadi Seorang  Programmer Handal;2020;Fahmi Firdaus;UPNYK;
+52;Programmer Handal;2020;Fahmi Firdaus;UPNYK;
